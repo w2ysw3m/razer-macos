@@ -1,0 +1,36 @@
+{
+  "name": "Razer Hyper Polling Wireless Dongle",
+  "productId": "0x00b3",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src/6141/6141-1-en-v1.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "pollRate": {
+        "pollRates": [
+          125,
+          500,
+          1000,
+          2000,
+          4000,
+          8000
+        ]
+      }
+    },
+    {
+      "dpi": {
+        "max": 30000
+      }
+    }
+  ]
+}

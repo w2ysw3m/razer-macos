@@ -1,5 +1,14 @@
 import { RazerDeviceAnimation } from './animation';
 
+function loadIoHook() {
+  try {
+    return require('iohook');
+  } catch (error) {
+    console.warn('iohook is unavailable; ripple keyboard input animation is disabled.', error.message);
+    return null;
+  }
+}
+
 export class RazerAnimationRipple extends RazerDeviceAnimation {
 
 constructor(device, featureConfiguration, color, backgroundColor = [0, 0, 0]) {
@@ -117,13 +126,17 @@ constructor(device, featureConfiguration, color, backgroundColor = [0, 0, 0]) {
     this.backgroundColor = backgroundColor != null ? backgroundColor : [0, 0, 0];
 
     this.device = device;
-    this.ioHook = require('iohook');
+    this.ioHook = loadIoHook();
 
     this.nRows = featureConfiguration.rows;
     this.nCols = featureConfiguration.cols;
   }
 
   start() {
+    if (this.ioHook == null) {
+      return;
+    }
+
     this.ioHook.start();
 
     const refreshRate = 0.05; // in seconds
@@ -190,11 +203,15 @@ constructor(device, featureConfiguration, color, backgroundColor = [0, 0, 0]) {
 
   stop() {
     clearTimeout(this.rippleEffectInterval);
-    this.ioHook.stop();
+    if (this.ioHook != null) {
+      this.ioHook.stop();
+    }
   }
 
   destroy() {
     this.stop();
-    this.ioHook.unload();
+    if (this.ioHook != null) {
+      this.ioHook.unload();
+    }
   }
 }

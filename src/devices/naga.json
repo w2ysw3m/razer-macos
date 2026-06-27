@@ -1,0 +1,24 @@
+{
+  "name": "Razer Naga",
+  "productId": "0x0015",
+  "mainType": "mouse",
+  "image": "https://assets.razerzone.com/eeimages/products/40/razer-naga-molten-gallery-4.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "dpi": {
+        "max": 5600
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Razer Blade 18 2023",
+  "productId": "0x02a0",
+  "mainType": "keyboard",
+  "image": "https://dl.razerzone.com/src2/9676/9676-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 16
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 16
+      }
+    }
+  ]
+}

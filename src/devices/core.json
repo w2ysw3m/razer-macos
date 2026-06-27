@@ -1,0 +1,23 @@
+{
+  "name": "Razer Core",
+  "productId": "0x0215",
+  "mainType": "egpu",
+  "image": "https://assets.razerzone.com/eeimages/support/products/684/684_razer_core.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveSimple": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

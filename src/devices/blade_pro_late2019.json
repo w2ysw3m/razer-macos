@@ -1,0 +1,49 @@
+{
+  "name": "Razer Blade Pro Late 2019",
+  "productId": "0x024c",
+  "mainType": "keyboard",
+  "image": "https://assets2.razerzone.com/images/razer-blade-pro-17/razer-blade-pro-17-2019-OGimage-1200x630.jpg",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 16
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 16
+      }
+    }
+  ]
+}

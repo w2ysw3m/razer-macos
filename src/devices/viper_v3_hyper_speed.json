@@ -1,0 +1,24 @@
+{
+  "name": "Razer Viper V3 HyperSpeed",
+  "productId": "0x00b8",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/13432/13432-1-en-v3.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "dpi": {
+        "max": 30000
+      }
+    }
+  ]
+}

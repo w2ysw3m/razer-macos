@@ -46,6 +46,10 @@ export default function CustomColor({ deviceSelected }) {
   }
 
   const staticFeature = deviceSelected.features.find(feature => feature.featureIdentifier === FeatureIdentifier.STATIC);
+  if (staticFeature == null) {
+    return null;
+  }
+
   const allColors = hasAllColors(staticFeature);
   let colors = [];
   if(!allColors) {

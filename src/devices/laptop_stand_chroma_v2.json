@@ -1,0 +1,23 @@
+{
+  "name": "Razer Laptop Stand Chroma V2",
+  "productId": "0x0f2b",
+  "mainType": "accessory",
+  "image": "https://assets2.razerzone.com/images/pnx.assets/272c328913c00c6f584fe3dead2ca2a6/razer-laptop-stand-chroma-v2-hero-mobile-v2.jpg",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

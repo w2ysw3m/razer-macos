@@ -4,6 +4,8 @@ import { SectionSettingBlock } from './sectionsettingblock';
 import { ipcRenderer } from 'electron';
 import { FeatureIdentifier } from '../../main/feature/featureidentifier';
 
+const DEFAULT_POLL_RATES = [125, 250, 500, 1000];
+
 export class SectionSettingPollRate extends SectionSettingBlock {
 
   constructor(props) {
@@ -35,7 +37,11 @@ export class SectionSettingPollRate extends SectionSettingBlock {
       return null;
     }
 
-    const options = this.pollRateFeature.configuration.pollRates.map(rate => {
+    const pollRates = this.pollRateFeature.configuration && Array.isArray(this.pollRateFeature.configuration.pollRates)
+      ? this.pollRateFeature.configuration.pollRates
+      : DEFAULT_POLL_RATES;
+
+    const options = pollRates.map(rate => {
       return { value: rate, label: rate + 'Hz' };
     });
 

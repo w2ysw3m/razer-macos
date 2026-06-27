@@ -1,0 +1,24 @@
+{
+  "name": "Razer DeathAdder V3 Pro Wireless",
+  "productId": "0x00b7",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src/6130/6130-1-en-v2.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "dpi": {
+        "max": 35000
+      }
+    }
+  ]
+}

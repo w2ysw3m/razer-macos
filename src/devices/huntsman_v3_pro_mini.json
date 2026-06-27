@@ -1,0 +1,49 @@
+{
+  "name": "Razer Huntsman V3 Pro Mini",
+  "productId": "0x02b0",
+  "mainType": "keyboard",
+  "image": "https://medias-p1.phoenix.razer.com/sys-master-phoenix-images-container/h8d/h31/9662065901598/230921-huntsman-v3-pro-mini-black-1500x1000-5.jpg",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 5,
+        "cols": 15
+      }
+    },
+    {
+      "wheel": {
+        "rows": 5,
+        "cols": 15
+      }
+    }
+  ]
+}

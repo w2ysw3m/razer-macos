@@ -1,0 +1,49 @@
+{
+  "name": "Razer Blade 15 Advanced Early 2022",
+  "productId": "0x028a",
+  "mainType": "keyboard",
+  "image": "https://assets2.razerzone.com/images/pnx.assets/a1ee4c5a780a401444be898fe93ade69/thumbnail-blade15-new-model.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 16
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 16
+      }
+    }
+  ]
+}

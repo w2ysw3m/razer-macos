@@ -1,0 +1,49 @@
+{
+  "name": "Razer BlackWidow V4 Tenkeyless HyperSpeed Wired",
+  "productId": "0x02d7",
+  "mainType": "keyboard",
+  "image": "https://dl.razerzone.com/src2/15142/15142-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 18
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 18
+      }
+    }
+  ]
+}

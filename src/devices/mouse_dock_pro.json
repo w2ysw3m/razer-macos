@@ -1,0 +1,20 @@
+{
+  "name": "Razer Mouse Dock Pro",
+  "productId": "0x00a4",
+  "mainType": "mousedock",
+  "image": "https://dl.razerzone.com/src2/6229/6229-1-en-v2.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

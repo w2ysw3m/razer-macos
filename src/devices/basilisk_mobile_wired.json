@@ -1,0 +1,42 @@
+{
+  "name": "Razer Basilisk Mobile Wired",
+  "productId": "0x00d3",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/15485/15485-1-en-v2.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": true,
+        "enabledLogo": false,
+        "enabledScroll": false,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "dpi": {
+        "max": 18000
+      }
+    }
+  ]
+}

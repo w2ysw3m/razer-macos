@@ -1,4 +1,5 @@
 import { RazerDevice } from './razerdevice';
+import { FeatureIdentifier } from '../feature/featureidentifier';
 
 export class RazerDeviceMouseMat extends RazerDevice {
   constructor(addon, settingsManager, stateManager, razerProperties) {
@@ -6,18 +7,22 @@ export class RazerDeviceMouseMat extends RazerDevice {
   }
 
   async init() {
-    this.brightness = this.addon.mouseMatGetBrightness(this.internalId);
+    if (this.hasFeature(FeatureIdentifier.BRIGHTNESS)) {
+      this.brightness = this.addon.mouseMatGetBrightness(this.internalId);
+    }
     return super.init();
   }
 
   getState() {
     const deviceState = super.getState();
-    deviceState['brightness'] = this.brightness;
+    if (this.hasFeature(FeatureIdentifier.BRIGHTNESS)) {
+      deviceState['brightness'] = this.brightness;
+    }
     return deviceState;
   }
   resetToState(state) {
     super.resetToState(state);
-    if(typeof state.brightness !== 'undefined') {
+    if(this.hasFeature(FeatureIdentifier.BRIGHTNESS) && typeof state.brightness !== 'undefined') {
       this.setBrightness(state.brightness);
     }
   }

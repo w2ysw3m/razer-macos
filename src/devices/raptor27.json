@@ -1,0 +1,23 @@
+{
+  "name": "Razer Raptor 27",
+  "productId": "0x0f12",
+  "mainType": "accessory",
+  "image": "https://hybrismediaprod.blob.core.windows.net/sys-master-phoenix-images-container/ha0/h53/9081460162590/raptor-27-gallery-1.jpg",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

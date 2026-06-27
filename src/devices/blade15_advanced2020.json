@@ -1,0 +1,49 @@
+{
+  "name": "Razer Blade 15 Advanced 2020",
+  "productId": "0x0253",
+  "mainType": "keyboard",
+  "image": "https://assets.razerzone.com/eeimages/support/products/1651/razer-blade-15-advanced-2020.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 16
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 16
+      }
+    }
+  ]
+}

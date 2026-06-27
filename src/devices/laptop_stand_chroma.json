@@ -1,0 +1,23 @@
+{
+  "name": "Razer Laptop Stand Chroma",
+  "productId": "0x0f0d",
+  "mainType": "accessory",
+  "image": "https://hybrismediaprod.blob.core.windows.net/sys-master-phoenix-images-container/hfe/hbc/9081459376158/Razer-Laptop-Stand-Chroma-04.jpg",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

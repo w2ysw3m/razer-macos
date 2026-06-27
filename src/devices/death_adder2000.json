@@ -1,0 +1,39 @@
+{
+  "name": "Razer DeathAdder 2000",
+  "productId": "0x004f",
+  "mainType": "mouse",
+  "image": "https://assets2.razerzone.com/images/da10m/carousel/razer-death-adder-gallery-09.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": false,
+        "enabledLogo": true,
+        "enabledScroll": true,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "dpi": {
+        "max": 2000
+      }
+    }
+  ]
+}

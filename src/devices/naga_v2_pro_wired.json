@@ -1,0 +1,54 @@
+{
+  "name": "Razer Naga V2 Pro Wired",
+  "productId": "0x00a7",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/6292/6292-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveSimple": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": false,
+        "enabledLogo": true,
+        "enabledScroll": false,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "dpi": {
+        "max": 30000
+      }
+    }
+  ]
+}

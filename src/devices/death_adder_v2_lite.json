@@ -1,0 +1,48 @@
+{
+  "name": "Razer DeathAdder V2 Lite",
+  "productId": "0x00a1",
+  "mainType": "mouse",
+  "image": "https://assets.razerzone.com/eeimages/support/products/1692/deathadder-v2-mini.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": false,
+        "enabledLogo": true,
+        "enabledScroll": false,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "dpi": {
+        "max": 8500
+      }
+    }
+  ]
+}

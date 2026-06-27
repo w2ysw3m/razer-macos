@@ -1,0 +1,48 @@
+{
+  "name": "Razer Basilisk V3 Pro 35K Wired",
+  "productId": "0x00cc",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/14676/14676-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveSimple": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": true,
+        "enabledLogo": true,
+        "enabledScroll": true,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "dpi": {
+        "max": 35000
+      }
+    }
+  ]
+}

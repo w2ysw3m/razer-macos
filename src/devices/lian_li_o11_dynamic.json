@@ -1,0 +1,23 @@
+{
+  "name": "Razer Lian Li O11 Dynamic",
+  "productId": "0x0f13",
+  "mainType": "accessory",
+  "image": "https://assets2.razerzone.com/images/pnx.assets/6bd258f651d00e7ee1d7a5c4607917f3/lian-li-usp-desktop.jpg",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

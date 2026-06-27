@@ -1,0 +1,24 @@
+{
+  "name": "Razer DeathAdder V2 X HyperSpeed",
+  "productId": "0x009c",
+  "mainType": "mouse",
+  "image": "https://hybrismediaprod.blob.core.windows.net/sys-master-phoenix-images-container/he8/h51/9250345058334/deathadder-v2-x-hyperspeed-500x500.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "dpi": {
+        "max": 14000
+      }
+    }
+  ]
+}

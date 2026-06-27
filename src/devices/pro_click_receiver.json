@@ -1,0 +1,33 @@
+{
+  "name": "Razer Pro Click Receiver",
+  "productId": "0x0077",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src/3802-0-en-v1.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "pollRate": {
+        "pollRates": [
+          125,
+          500,
+          1000
+        ]
+      }
+    },
+    {
+      "dpi": {
+        "max": 16000
+      }
+    }
+  ]
+}

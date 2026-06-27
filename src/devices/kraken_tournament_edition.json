@@ -1,0 +1,20 @@
+{
+  "name": "Razer Kraken Tournament Edition",
+  "productId": "0x0520",
+  "mainType": "headphone",
+  "image": "https://assets.razerzone.com/eeimages/support/products/1399/1399_razerkrakente.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

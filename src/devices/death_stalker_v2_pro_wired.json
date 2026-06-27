@@ -1,0 +1,49 @@
+{
+  "name": "Razer DeathStalker V2 Pro Wired",
+  "productId": "0x0292",
+  "mainType": "keyboard",
+  "image": "https://dl.razerzone.com/src/6118/6118-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 22
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 22
+      }
+    }
+  ]
+}

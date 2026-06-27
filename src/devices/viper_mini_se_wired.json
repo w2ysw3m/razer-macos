@@ -1,0 +1,33 @@
+{
+  "name": "Razer Viper Mini SE Wired",
+  "productId": "0x009e",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/9682/9682-1-en-v1.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "pollRate": {
+        "pollRates": [
+          125,
+          500,
+          1000
+        ]
+      }
+    },
+    {
+      "dpi": {
+        "max": 30000
+      }
+    }
+  ]
+}

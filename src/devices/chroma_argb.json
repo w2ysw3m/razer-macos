@@ -1,0 +1,23 @@
+{
+  "name": "Razer Chroma ARGB",
+  "productId": "0x0f1f",
+  "mainType": "accessory",
+  "image": "https://dl.razerzone.com/src/3903-1-EN-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

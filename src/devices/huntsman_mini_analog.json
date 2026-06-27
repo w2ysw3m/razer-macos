@@ -1,0 +1,46 @@
+{
+  "name": "Razer Huntsman Mini Analog",
+  "productId": "0x0282",
+  "mainType": "keyboard",
+  "image": "https://assets.razerzone.com/eeimages/support/products/1689/1689-huntsmanmini.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 5,
+        "cols": 15
+      }
+    },
+    {
+      "wheel": {
+        "rows": 5,
+        "cols": 15
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Razer Blade Stealth Late 2020",
+  "productId": "0x0259",
+  "mainType": "keyboard",
+  "image": "https://assets2.razerzone.com/images/blade-stealth-13/shop/sl25p-fhd-4.jpg",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

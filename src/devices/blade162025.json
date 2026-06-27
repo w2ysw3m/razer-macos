@@ -1,0 +1,49 @@
+{
+  "name": "Razer Blade 16 2025",
+  "productId": "0x02c6",
+  "mainType": "keyboard",
+  "image": "https://dl.razerzone.com/src2/14806/14806-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 17
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 17
+      }
+    }
+  ]
+}

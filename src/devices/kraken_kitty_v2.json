@@ -1,0 +1,20 @@
+{
+  "name": "Razer Kraken Kitty V2",
+  "productId": "0x0560",
+  "mainType": "headphone",
+  "image": "https://medias-p1.phoenix.razer.com/sys-master-phoenix-images-container/hcc/h6b/9631977570334/kraken-kitty-v2-quartz-500x500.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

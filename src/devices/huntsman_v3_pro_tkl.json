@@ -1,0 +1,49 @@
+{
+  "name": "Razer Huntsman V3 Pro TKL",
+  "productId": "0x02a7",
+  "mainType": "keyboard",
+  "image": "https://assets2.razerzone.com/images/pnx.assets/d01af9710e2077e2b88eb9dc6f68f62f/quick-actuation-adjustment-mode.webp",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 22
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 22
+      }
+    }
+  ]
+}

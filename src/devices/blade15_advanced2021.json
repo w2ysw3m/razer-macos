@@ -1,0 +1,49 @@
+{
+  "name": "Razer Blade 15 Advanced 2021",
+  "productId": "0x0276",
+  "mainType": "keyboard",
+  "image": "https://assets.razerzone.com/eeimages/support/products/1778/1778-razerblade15advanced2021rz09-0409x-2.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 16
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 16
+      }
+    }
+  ]
+}

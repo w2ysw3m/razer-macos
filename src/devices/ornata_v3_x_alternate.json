@@ -1,0 +1,40 @@
+{
+  "name": "Razer Ornata V3 X Alternate",
+  "productId": "0x02a2",
+  "mainType": "keyboard",
+  "image": "https://dl.razerzone.com/src/6071-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 1,
+        "cols": 1
+      }
+    },
+    {
+      "wheel": {
+        "rows": 1,
+        "cols": 1
+      }
+    }
+  ]
+}

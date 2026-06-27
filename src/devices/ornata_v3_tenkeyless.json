@@ -1,0 +1,46 @@
+{
+  "name": "Razer Ornata V3 Tenkeyless",
+  "productId": "0x02a3",
+  "mainType": "keyboard",
+  "image": "https://dl.razerzone.com/src2/13038/13038-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 1,
+        "cols": 8
+      }
+    },
+    {
+      "wheel": {
+        "rows": 1,
+        "cols": 8
+      }
+    }
+  ]
+}

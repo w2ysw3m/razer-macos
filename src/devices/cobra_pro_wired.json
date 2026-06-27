@@ -1,0 +1,48 @@
+{
+  "name": "Razer Cobra Pro Wired",
+  "productId": "0x00af",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/13182/13182-1-en-v2.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveSimple": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": true,
+        "enabledLogo": true,
+        "enabledScroll": true,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "dpi": {
+        "max": 30000
+      }
+    }
+  ]
+}

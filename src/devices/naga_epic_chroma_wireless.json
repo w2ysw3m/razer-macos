@@ -1,0 +1,48 @@
+{
+  "name": "Razer Naga Epic Chroma Wireless",
+  "productId": "0x003f",
+  "mainType": "mouse",
+  "image": "https://assets.razerzone.com/eeimages/products/20776/rzrnagaepicchroma_04.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": true,
+        "enabledLogo": false,
+        "enabledScroll": true,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "dpi": {
+        "max": 8200
+      }
+    }
+  ]
+}

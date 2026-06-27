@@ -1,0 +1,58 @@
+{
+  "name": "Razer Pro Click V2 Vertical Edition Wired",
+  "productId": "0x00c7",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/15010/15010-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveSimple": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": true,
+        "enabledLogo": false,
+        "enabledScroll": false,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "pollRate": {
+        "pollRates": [
+          125,
+          250,
+          500,
+          1000
+        ]
+      }
+    },
+    {
+      "dpi": {
+        "max": 30000
+      }
+    }
+  ]
+}

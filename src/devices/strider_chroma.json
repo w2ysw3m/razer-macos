@@ -1,0 +1,23 @@
+{
+  "name": "Razer Strider Chroma",
+  "productId": "0x0c05",
+  "mainType": "mousemat",
+  "image": "https://assets2.razerzone.com/images/pnx.assets/73158705dfbee8e688bab3c7ae99c6d3/razer-strider-chroma-extended-size-1920x700.webp",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveSimple": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

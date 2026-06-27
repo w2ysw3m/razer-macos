@@ -1,0 +1,23 @@
+{
+  "name": "Razer Blade Early 2020 Base",
+  "productId": "0x0255",
+  "mainType": "keyboard",
+  "image": "https://assets2.razerzone.com/images/blade-15/blade-15-base-model-spec-image-v2.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

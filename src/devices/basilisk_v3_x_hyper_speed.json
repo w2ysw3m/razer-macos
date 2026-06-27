@@ -1,0 +1,36 @@
+{
+  "name": "Razer Basilisk V3 X HyperSpeed",
+  "productId": "0x00b9",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/9766/9766-1-en-v1.png",
+  "features": [
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": false,
+        "enabledLogo": false,
+        "enabledScroll": true,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "dpi": {
+        "max": 18000
+      }
+    }
+  ]
+}

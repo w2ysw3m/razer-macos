@@ -1,0 +1,23 @@
+{
+  "name": "Razer Book 2020",
+  "productId": "0x026a",
+  "mainType": "keyboard",
+  "image": "https://assets.razerzone.com/eeimages/support/products/1743/razerbook132020.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

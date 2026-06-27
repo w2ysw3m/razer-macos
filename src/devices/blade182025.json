@@ -1,0 +1,49 @@
+{
+  "name": "Razer Blade 18 2025",
+  "productId": "0x02c7",
+  "mainType": "keyboard",
+  "image": "https://dl.razerzone.com/src2/14968/14968-1-en-v1.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 6,
+        "cols": 19
+      }
+    },
+    {
+      "wheel": {
+        "rows": 6,
+        "cols": 19
+      }
+    }
+  ]
+}

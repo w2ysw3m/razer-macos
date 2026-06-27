@@ -1,0 +1,36 @@
+{
+  "name": "Razer DeathAdder V4 Pro Wireless",
+  "productId": "0x00bf",
+  "mainType": "mouse",
+  "image": "https://medias-p1.phoenix.razer.com/sys-master-phoenix-images-container/h01/hf3/9926511951902/deathadder-v4-pro-black-500x500.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "pollRate": {
+        "pollRates": [
+          125,
+          500,
+          1000,
+          2000,
+          4000,
+          8000
+        ]
+      }
+    },
+    {
+      "dpi": {
+        "max": 45000
+      }
+    }
+  ]
+}

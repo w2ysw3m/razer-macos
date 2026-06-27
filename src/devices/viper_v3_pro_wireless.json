@@ -1,0 +1,36 @@
+{
+  "name": "Razer Viper V3 Pro Wireless",
+  "productId": "0x00c1",
+  "mainType": "mouse",
+  "image": "https://dl.razerzone.com/src2/14044/14044-1-en-v1.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "pollRate": {
+        "pollRates": [
+          125,
+          500,
+          1000,
+          2000,
+          4000,
+          8000
+        ]
+      }
+    },
+    {
+      "dpi": {
+        "max": 35000
+      }
+    }
+  ]
+}

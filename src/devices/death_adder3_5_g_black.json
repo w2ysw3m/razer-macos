@@ -1,0 +1,21 @@
+{
+  "name": "Razer DeathAdder 3.5G Black",
+  "productId": "0x0029",
+  "mainType": "mouse",
+  "image": "https://assets.razerzone.com/eeimages/products/33/razer-deathadder-be-gallery-3.png",
+  "features": [
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "dpi": {
+        "max": 3500
+      }
+    }
+  ]
+}

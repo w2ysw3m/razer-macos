@@ -1,0 +1,23 @@
+{
+  "name": "Razer Charging Pad Chroma",
+  "productId": "0x0f26",
+  "mainType": "accessory",
+  "image": "https://dl.razerzone.com/Images/ChargingPadChroma/CPC-ProductImage.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "breathe": null
+    }
+  ]
+}

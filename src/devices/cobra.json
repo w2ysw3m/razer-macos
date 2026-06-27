@@ -1,0 +1,57 @@
+{
+  "name": "Razer Cobra",
+  "productId": "0x00a3",
+  "mainType": "mouse",
+  "image": "https://hybrismediaprod.blob.core.windows.net/sys-master-phoenix-images-container/h54/h60/9591466950686/cobra-500x500.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": false,
+        "enabledLogo": true,
+        "enabledScroll": false,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "pollRate": {
+        "pollRates": [
+          125,
+          500,
+          1000
+        ]
+      }
+    },
+    {
+      "dpi": {
+        "max": 8500
+      }
+    }
+  ]
+}

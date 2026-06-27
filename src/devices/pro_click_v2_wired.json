@@ -1,0 +1,58 @@
+{
+  "name": "Razer Pro Click V2 Wired",
+  "productId": "0x00d0",
+  "mainType": "mouse",
+  "image": "https://medias-p1.phoenix.razer.com/sys-master-phoenix-images-container/ha3/h76/9899953717278/pro-click-v2-black-500x500.png",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveSimple": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "mouseBrightness": null
+    },
+    {
+      "pollRate": null
+    },
+    {
+      "dpi": null
+    },
+    {
+      "battery": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "mouseBrightness": {
+        "enabledMatrix": true,
+        "enabledLogo": false,
+        "enabledScroll": false,
+        "enabledLeft": false,
+        "enabledRight": false
+      }
+    },
+    {
+      "pollRate": {
+        "pollRates": [
+          125,
+          250,
+          500,
+          1000
+        ]
+      }
+    },
+    {
+      "dpi": {
+        "max": 30000
+      }
+    }
+  ]
+}

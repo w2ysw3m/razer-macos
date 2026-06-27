@@ -1,0 +1,49 @@
+{
+  "name": "Razer BlackWidow V4 Mini HyperSpeed Wireless",
+  "productId": "0x02ba",
+  "mainType": "keyboard",
+  "image": "https://assets2.razerzone.com/images/pnx.assets/d0ebf9b718890099da55f79fb6b4569f/razer-blackwidowv4-mini-hyperspeed-usp5.webp",
+  "features": [
+    {
+      "none": null
+    },
+    {
+      "static": null
+    },
+    {
+      "waveExtended": null
+    },
+    {
+      "spectrum": null
+    },
+    {
+      "reactive": null
+    },
+    {
+      "breathe": null
+    },
+    {
+      "starlight": null
+    },
+    {
+      "ripple": null
+    },
+    {
+      "wheel": null
+    }
+  ],
+  "featuresConfig": [
+    {
+      "ripple": {
+        "rows": 5,
+        "cols": 14
+      }
+    },
+    {
+      "wheel": {
+        "rows": 5,
+        "cols": 14
+      }
+    }
+  ]
+}
