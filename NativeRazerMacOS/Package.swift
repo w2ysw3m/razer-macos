@@ -12,10 +12,20 @@ let package = Package(
     .executable(name: "NativeRazerMacOS", targets: ["NativeRazerMacOS"])
   ],
   targets: [
+    .target(
+      name: "NativeRazerBridgeC",
+      cSettings: [
+        .unsafeFlags(["-I", "../librazermacos/src/include"])
+      ],
+      linkerSettings: [
+        .linkedFramework("CoreFoundation"),
+        .linkedFramework("IOKit")
+      ]
+    ),
     .target(name: "NativeRazerCore"),
     .executableTarget(
       name: "NativeRazerMacOS",
-      dependencies: ["NativeRazerCore"]
+      dependencies: ["NativeRazerBridgeC", "NativeRazerCore"]
     ),
     .testTarget(
       name: "NativeRazerCoreTests",

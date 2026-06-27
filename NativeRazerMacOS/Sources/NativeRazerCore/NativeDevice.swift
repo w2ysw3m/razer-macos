@@ -2,9 +2,12 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
   public let id: String
   public let name: String
   public let productId: String
-  public let connection: String
+  public var connection: String
   public let capabilities: [DeviceCapability]
-  public let bridgeStatus: String
+  public var bridgeStatus: String
+  public var hardwareInternalId: Int?
+  public var controlConfiguration: DeviceControlConfiguration
+  public var controlState: DeviceControlState
 
   public init(
     id: String,
@@ -12,7 +15,10 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
     productId: String,
     connection: String,
     capabilities: [DeviceCapability],
-    bridgeStatus: String
+    bridgeStatus: String,
+    hardwareInternalId: Int? = nil,
+    controlConfiguration: DeviceControlConfiguration = .none,
+    controlState: DeviceControlState = DeviceControlState()
   ) {
     self.id = id
     self.name = name
@@ -20,5 +26,8 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
     self.connection = connection
     self.capabilities = capabilities
     self.bridgeStatus = bridgeStatus
+    self.hardwareInternalId = hardwareInternalId
+    self.controlConfiguration = controlConfiguration
+    self.controlState = controlState
   }
 }

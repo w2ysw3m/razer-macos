@@ -9,6 +9,13 @@ struct DetailView: View {
       VStack(alignment: .leading, spacing: 18) {
         header
         deviceSummary
+        if let device = store.selectedDevice {
+          DeviceControlsView(
+            device: device,
+            onSetDPI: store.setDPI,
+            onSetPollingRate: store.setPollingRate
+          )
+        }
         migrationStages
       }
       .padding(24)
@@ -30,7 +37,7 @@ struct DetailView: View {
       Text("Native macOS foundation")
         .font(.largeTitle.weight(.semibold))
 
-      Text("SwiftUI/AppKit shell ready for librazermacos device controls.")
+      Text("SwiftUI/AppKit controls backed by the librazermacos bridge.")
         .font(.body)
         .foregroundStyle(.secondary)
     }
@@ -58,7 +65,7 @@ struct DetailView: View {
     GroupBox("Migration stages") {
       VStack(alignment: .leading, spacing: 12) {
         ForEach(store.stages) { stage in
-          let isReady = stage == .nativeShell
+          let isReady = stage != .packaging
 
           HStack(alignment: .top, spacing: 10) {
             Image(systemName: isReady ? "checkmark.circle" : "circle.dashed")

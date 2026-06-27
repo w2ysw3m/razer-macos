@@ -16,7 +16,7 @@ APP_BINARY="$APP_MACOS/$APP_NAME"
 INFO_PLIST="$APP_CONTENTS/Info.plist"
 
 usage() {
-  echo "usage: $0 [run|--debug|--logs|--telemetry|--verify]" >&2
+  echo "usage: $0 [run|--debug|--logs|--telemetry|--verify|--scan-hardware]" >&2
 }
 
 build_bundle() {
@@ -80,6 +80,10 @@ case "$MODE" in
     open_app
     sleep 2
     pgrep -x "$APP_NAME" >/dev/null
+    ;;
+  --scan-hardware|scan-hardware)
+    build_bundle
+    "$APP_BINARY" --scan-hardware
     ;;
   *)
     usage

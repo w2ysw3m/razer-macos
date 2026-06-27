@@ -5,17 +5,23 @@ import Observation
 @Observable
 final class NativeDeviceStore {
   private let inventory: MigrationInventory
+  private let hardwareController: NativeRazerHardwareControlling
   private(set) var devices: [NativeDevice]
   private(set) var stages: [MigrationStage]
   var selectedDeviceId: NativeDevice.ID?
   var lastRefreshSummary: String
 
-  init(inventory: MigrationInventory = MigrationInventory()) {
+  init(
+    inventory: MigrationInventory = MigrationInventory(),
+    hardwareController: NativeRazerHardwareControlling = NativeRazerHardwareController()
+  ) {
     self.inventory = inventory
+    self.hardwareController = hardwareController
     self.devices = inventory.devices
     self.stages = inventory.stages
     self.selectedDeviceId = inventory.primaryDevice?.id ?? inventory.devices.first?.id
     self.lastRefreshSummary = "Ready to bridge \(inventory.bridgeSourcePath)"
+    refresh()
   }
 
   var selectedDevice: NativeDevice? {
@@ -36,9 +42,108 @@ final class NativeDeviceStore {
   }
 
   func refresh() {
-    devices = inventory.devices
+    let hardwareMice = hardwareController.refreshMice()
+    devices = inventory.devices.map { device in
+      guard let hardwareMouse = hardwareMice.first(where: { $0.productId == device.productId }) else {
+        var previewDevice = device
+        previewDevice.hardwareInternalId = nil
+        previewDevice.bridgeStatus = "Controls available in preview; hardware not matched."
+        return previewDevice
+      }
+
+      var connectedDevice = device
+      let readSucceeded = hardwareMouse.dpi > 0 || hardwareMouse.pollingRate > 0
+      connectedDevice.connection = "librazermacos internal #\(hardwareMouse.internalDeviceId)"
+      connectedDevice.hardwareInternalId = hardwareMouse.internalDeviceId
+      connectedDevice.bridgeStatus = readSucceeded
+        ? "Connected through librazermacos bridge."
+        : "Detected through librazermacos; settings read timed out."
+      connectedDevice.controlState.dpi = normalizedDPI(hardwareMouse.dpi, fallback: device.controlState.dpi)
+      connectedDevice.controlState.pollingRate = normalizedPollingRate(
+        hardwareMouse.pollingRate,
+        fallback: device.controlState.pollingRate
+      )
+      connectedDevice.controlState.batteryLevel = hardwareMouse.batteryLevel
+      connectedDevice.controlState.isCharging = hardwareMouse.isCharging
+      return connectedDevice
+    }
     stages = inventory.stages
     selectedDeviceId = selectedDevice?.id ?? inventory.primaryDevice?.id
-    lastRefreshSummary = "Loaded \(devices.count) native migration target"
+    lastRefreshSummary = hardwareMice.isEmpty
+      ? "Loaded \(devices.count) target; no live Razer mouse matched"
+      : "Loaded \(hardwareMice.count) live Razer mouse"
+  }
+
+  func setDPI(_ dpi: Int) {
+    guard let device = selectedDevice else {
+      return
+    }
+
+    let result = hardwareController.setDPI(dpi, internalDeviceId: device.hardwareInternalId)
+    updateSelectedDevice { selected in
+      selected.controlState.dpi = dpi
+      selected.bridgeStatus = statusText(for: result)
+    }
+    lastRefreshSummary = summaryText(action: "DPI \(dpi)", result: result)
+  }
+
+  func setPollingRate(_ pollingRate: Int) {
+    guard let device = selectedDevice else {
+      return
+    }
+
+    let result = hardwareController.setPollingRate(
+      pollingRate,
+      internalDeviceId: device.hardwareInternalId
+    )
+    updateSelectedDevice { selected in
+      selected.controlState.pollingRate = pollingRate
+      selected.bridgeStatus = statusText(for: result)
+    }
+    lastRefreshSummary = summaryText(action: "\(pollingRate) Hz", result: result)
+  }
+
+  func shutdown() {
+    hardwareController.shutdown()
+  }
+
+  private func normalizedDPI(_ dpi: Int, fallback: Int?) -> Int? {
+    dpi > 0 ? dpi : fallback
+  }
+
+  private func normalizedPollingRate(_ pollingRate: Int, fallback: Int?) -> Int? {
+    pollingRate > 0 ? pollingRate : fallback
+  }
+
+  private func updateSelectedDevice(_ update: (inout NativeDevice) -> Void) {
+    guard let selectedDeviceId,
+          let index = devices.firstIndex(where: { $0.id == selectedDeviceId })
+    else {
+      return
+    }
+
+    update(&devices[index])
+  }
+
+  private func statusText(for result: HardwareApplyResult) -> String {
+    switch result {
+    case .applied:
+      "Command sent through librazermacos bridge."
+    case .previewOnly(let message):
+      message
+    case .failed(let message):
+      message
+    }
+  }
+
+  private func summaryText(action: String, result: HardwareApplyResult) -> String {
+    switch result {
+    case .applied:
+      "Sent \(action) to hardware"
+    case .previewOnly:
+      "Previewed \(action); hardware not matched"
+    case .failed:
+      "Could not apply \(action)"
+    }
   }
 }

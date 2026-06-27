@@ -63,4 +63,16 @@ struct MigrationInventoryTests {
 
     #expect(inventory.supportedCapabilityCount == 4)
   }
+
+  @Test func deathAdderV3ProControlConfiguration_matchesMigratedMouseFeatures() throws {
+    let inventory = MigrationInventory()
+    let device = try #require(inventory.primaryDevice)
+
+    #expect(device.controlConfiguration.dpi?.min == 100)
+    #expect(device.controlConfiguration.dpi?.max == 35_000)
+    #expect(device.controlConfiguration.dpi?.step == 100)
+    #expect(device.controlConfiguration.pollingRates == [125, 250, 500, 1_000])
+    #expect(device.controlState.dpi == 1_600)
+    #expect(device.controlState.pollingRate == 1_000)
+  }
 }

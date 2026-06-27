@@ -3,17 +3,35 @@ import SwiftUI
 @main
 struct NativeRazerMacOSApp: App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-  @State private var store = NativeDeviceStore()
+  private let appModel = NativeAppModel.shared
+
+  init() {
+    if CommandLine.arguments.contains("--scan-hardware") {
+      HardwareProbe.runAndExit()
+    }
+  }
 
   var body: some Scene {
     WindowGroup("Razer macOS Native", id: "main") {
-      ContentView(store: store)
+      ContentView(store: appModel.store)
         .frame(minWidth: 860, minHeight: 540)
+    }
+
+    MenuBarExtra("Razer", systemImage: "computermouse") {
+      MenuBarStatusView(
+        store: appModel.store,
+        openMainWindow: appModel.showMainWindow
+      )
     }
     .commands {
       CommandMenu("Razer") {
+        Button("Open Razer macOS") {
+          appModel.showMainWindow()
+        }
+        .keyboardShortcut("o")
+
         Button("Refresh Devices") {
-          store.refresh()
+          appModel.refreshDevices()
         }
         .keyboardShortcut("r")
 

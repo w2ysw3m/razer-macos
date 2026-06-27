@@ -30,7 +30,9 @@ public struct MigrationInventory: Sendable {
       productId: "0x00B7",
       connection: "USB receiver / wired",
       capabilities: [.discovery, .dpi, .pollingRate, .battery],
-      bridgeStatus: "Protocol verified in librazermacos; native Swift bridge next."
+      bridgeStatus: "Ready for librazermacos bridge.",
+      controlConfiguration: .deathAdderV3Pro,
+      controlState: .deathAdderV3ProDefault
     )
   ]
 }
