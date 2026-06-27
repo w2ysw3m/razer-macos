@@ -31,6 +31,7 @@ public struct MigrationInventory: Sendable {
       connection: "USB receiver / wired",
       capabilities: [.discovery, .dpi, .pollingRate, .battery],
       bridgeStatus: "Ready for librazermacos bridge.",
+      bridgeStatusMessage: .readyForBridge,
       controlConfiguration: .deathAdderV3Pro,
       controlState: .deathAdderV3ProDefault
     )

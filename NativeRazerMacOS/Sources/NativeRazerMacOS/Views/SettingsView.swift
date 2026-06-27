@@ -1,43 +1,61 @@
+import NativeRazerCore
 import SwiftUI
 
 struct SettingsView: View {
   @State private var launchAtLogin = LaunchAtLoginController()
+  @AppStorage(AppLanguage.storageKey) private var languageRawValue = AppLanguage.english.rawValue
+
+  private var language: AppLanguage {
+    AppLanguage.stored(from: languageRawValue)
+  }
 
   var body: some View {
     TabView {
       Form {
-        LabeledContent("Runtime", value: "SwiftUI/AppKit")
-        LabeledContent("Device bridge", value: "librazermacos")
+        Picker(AppText.string(.language, language: language), selection: $languageRawValue) {
+          ForEach(AppLanguage.allCases) { appLanguage in
+            Text(appLanguage.displayName).tag(appLanguage.rawValue)
+          }
+        }
+        LabeledContent(AppText.string(.runtime, language: language), value: "SwiftUI/AppKit")
+        LabeledContent(AppText.string(.deviceBridge, language: language), value: "librazermacos")
         Toggle(
-          "Launch at Login",
+          AppText.string(.launchAtLogin, language: language),
           isOn: Binding(
             get: { launchAtLogin.isEnabled },
             set: { launchAtLogin.setEnabled($0) }
           )
         )
-        LabeledContent("Launch at Login status", value: launchAtLogin.statusDescription)
-        LabeledContent("Status bar", value: "Always on")
-        LabeledContent("Signing", value: "Planned")
+        LabeledContent(
+          AppText.string(.launchAtLoginStatus, language: language),
+          value: launchAtLogin.statusDescription(language: language)
+        )
+        LabeledContent(
+          AppText.string(.statusBar, language: language),
+          value: AppText.string(.statusBarAlwaysOn, language: language)
+        )
+        LabeledContent(
+          AppText.string(.signing, language: language),
+          value: AppText.string(.signingPlanned, language: language)
+        )
 
-        Button("Open Login Items in System Settings") {
+        Button(AppText.string(.openLoginItemsSettings, language: language)) {
           launchAtLogin.openLoginItemsSettings()
         }
 
-        Text(
-          "Launch at Login is registered with macOS ServiceManagement. If the local unsigned build shows Requires approval or Unavailable, check System Settings > General > Login Items."
-        )
+        Text(AppText.string(.launchAtLoginHelp, language: language))
         .font(.caption)
         .foregroundStyle(.secondary)
 
-        if !launchAtLogin.statusMessage.isEmpty {
-          Text(launchAtLogin.statusMessage)
+        if let statusMessage = launchAtLogin.statusMessage {
+          Text(statusMessage.localized(language: language))
             .font(.caption)
             .foregroundStyle(.secondary)
         }
       }
       .padding()
       .tabItem {
-        Label("General", systemImage: "gearshape")
+        Label(AppText.string(.general, language: language), systemImage: "gearshape")
       }
     }
     .frame(width: 520, height: 320)

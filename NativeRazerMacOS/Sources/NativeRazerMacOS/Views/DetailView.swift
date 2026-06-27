@@ -3,6 +3,7 @@ import SwiftUI
 
 struct DetailView: View {
   let store: NativeDeviceStore
+  @Environment(\.appLanguage) private var language
 
   var body: some View {
     ScrollView {
@@ -25,7 +26,7 @@ struct DetailView: View {
         Button {
           store.refresh()
         } label: {
-          Label("Refresh", systemImage: "arrow.clockwise")
+          Label(AppText.string(.refresh, language: language), systemImage: "arrow.clockwise")
         }
       }
     }
@@ -33,29 +34,41 @@ struct DetailView: View {
 
   private var header: some View {
     VStack(alignment: .leading, spacing: 6) {
-      Text(store.selectedDevice?.name ?? "Razer device")
+      Text(store.selectedDevice?.name ?? AppText.string(.razerDevice, language: language))
         .font(.largeTitle.weight(.semibold))
 
-      Text("Adjust device settings and review the current hardware connection.")
+      Text(AppText.string(.detailSubtitle, language: language))
         .font(.body)
         .foregroundStyle(.secondary)
     }
   }
 
   private var deviceSummary: some View {
-    GroupBox("Device status") {
+    GroupBox(AppText.string(.deviceStatus, language: language)) {
       if let device = store.selectedDevice {
         VStack(alignment: .leading, spacing: 12) {
-          LabeledContent("Device", value: device.name)
-          LabeledContent("Product ID", value: device.productId)
-          LabeledContent("Connection", value: device.connection)
-          LabeledContent("Status", value: device.bridgeStatus)
-          LabeledContent("Last update", value: store.lastRefreshSummary)
+          LabeledContent(AppText.string(.device, language: language), value: device.name)
+          LabeledContent(AppText.string(.productID, language: language), value: device.productId)
+          LabeledContent(
+            AppText.string(.connection, language: language),
+            value: device.localizedConnection(language: language)
+          )
+          LabeledContent(
+            AppText.string(.status, language: language),
+            value: device.bridgeStatusMessage.localized(language: language)
+          )
+          LabeledContent(
+            AppText.string(.lastUpdate, language: language),
+            value: store.lastRefreshSummary.localized(language: language)
+          )
 
-          FlowLayout(items: device.capabilities.map(\.rawValue))
+          FlowLayout(items: device.capabilities.map { $0.localizedName(language: language) })
         }
       } else {
-        ContentUnavailableView("No device selected", systemImage: "questionmark.circle")
+        ContentUnavailableView(
+          AppText.string(.noDeviceSelected, language: language),
+          systemImage: "questionmark.circle"
+        )
       }
     }
   }

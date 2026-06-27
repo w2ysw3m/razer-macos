@@ -1,4 +1,5 @@
 import AppKit
+import NativeRazerCore
 import SwiftUI
 
 @MainActor
@@ -11,7 +12,9 @@ final class NativeAppModel {
   private init() {}
 
   func showMainWindow() {
-    if let existingWindow = NSApp.windows.first(where: { $0.title == "Razer macOS Native" }) {
+    if let existingWindow = mainWindow ?? NSApp.windows.first(where: { $0.title == windowTitle }) {
+      mainWindow = existingWindow
+      existingWindow.title = windowTitle
       existingWindow.makeKeyAndOrderFront(nil)
       NSApp.activate(ignoringOtherApps: true)
       return
@@ -32,29 +35,19 @@ final class NativeAppModel {
   }
 
   func showAboutPanel() {
+    let language = AppLanguage.stored(
+      from: UserDefaults.standard.string(forKey: AppLanguage.storageKey)
+    )
     let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
       ?? "0.4.14"
     let credits = NSAttributedString(
-      string: """
-      Native SwiftUI/AppKit control app for Razer devices on macOS.
-
-      Current native surface:
-      - Menu-bar resident app
-      - Launch at Login
-      - DeathAdder V3 Pro discovery
-      - DPI and polling-rate controls through librazermacos
-      - Hardware status with conservative timeout reporting
-
-      Legacy Electron support keeps the broader device catalog and historical color/state logic. The native app marks a device native-ready only after its controls are wired and tested on macOS hardware.
-
-      Built on 1kc/razer-macos, librazermacos, and OpenRazer device work.
-      """
+      string: AppText.string(.aboutCredits, language: language)
     )
 
     NSApp.orderFrontStandardAboutPanel(options: [
-      .applicationName: "Razer macOS Native",
+      .applicationName: AppText.string(.appTitle, language: language),
       .applicationVersion: version,
-      .version: "SwiftUI/AppKit + librazermacos bridge",
+      .version: AppText.string(.appBuildDescription, language: language),
       .credits: credits
     ])
     NSApp.activate(ignoringOtherApps: true)
@@ -74,10 +67,17 @@ final class NativeAppModel {
       backing: .buffered,
       defer: false
     )
-    window.title = "Razer macOS Native"
+    window.title = windowTitle
     window.contentView = NSHostingView(rootView: rootView)
     window.isReleasedWhenClosed = false
     window.setFrameAutosaveName("NativeRazerMacOSMainWindow")
     return window
+  }
+
+  private var windowTitle: String {
+    let language = AppLanguage.stored(
+      from: UserDefaults.standard.string(forKey: AppLanguage.storageKey)
+    )
+    return AppText.string(.appTitle, language: language)
   }
 }

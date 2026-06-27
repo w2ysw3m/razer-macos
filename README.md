@@ -11,6 +11,7 @@ The current development focus is practical macOS support for newer Razer devices
 - Native SwiftUI/AppKit app shell in `NativeRazerMacOS`
 - macOS menu-bar resident app with a persistent status item
 - Native settings window with Launch at Login support through `ServiceManagement` and a System Settings Login Items shortcut
+- Native UI language selection for English, Simplified Chinese, and Traditional Chinese
 - Native device controls for DPI and polling rate
 - Battery/status display when the bridge can read it from hardware
 - C bridge from Swift into `librazermacos`
@@ -89,7 +90,7 @@ Run Swift tests:
 swift test --package-path NativeRazerMacOS
 ```
 
-The native app keeps running after its main window is closed. Reopen it from the menu-bar item, Dock, or the Razer command menu. Launch at Login is available from the native Settings window.
+The native app keeps running after its main window is closed. Reopen it from the menu-bar item, Dock, or the Razer command menu. Launch at Login and language selection are available from the native Settings window.
 
 ## Legacy Electron App
 

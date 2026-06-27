@@ -1,17 +1,23 @@
 import AppKit
+import NativeRazerCore
 import SwiftUI
 
 struct MenuBarStatusView: View {
   let store: NativeDeviceStore
   let openMainWindow: () -> Void
   let showAbout: () -> Void
+  @AppStorage(AppLanguage.storageKey) private var languageRawValue = AppLanguage.english.rawValue
+
+  private var language: AppLanguage {
+    AppLanguage.stored(from: languageRawValue)
+  }
 
   var body: some View {
-    Button("Open Razer macOS") {
+    Button(AppText.string(.openRazerMacOS, language: language)) {
       openMainWindow()
     }
 
-    Button("Refresh Devices") {
+    Button(AppText.string(.refreshDevices, language: language)) {
       store.refresh()
     }
 
@@ -24,33 +30,35 @@ struct MenuBarStatusView: View {
       .disabled(true)
 
       if let dpi = device.controlState.dpi {
-        Text("DPI: \(dpi)")
+        Text(AppText.formatted(.dpiMenu, language: language, dpi))
       }
 
       if let pollingRate = device.controlState.pollingRate {
-        Text("Rate: \(pollingRate) Hz")
+        Text(AppText.formatted(.rateMenu, language: language, pollingRate))
       }
 
       if let batteryLevel = device.controlState.batteryLevel {
-        Text("Battery: \(batteryLevel)%")
+        Text(AppText.formatted(.batteryMenu, language: language, batteryLevel))
       }
     } else {
-      Text("No Razer mouse")
+      Text(AppText.string(.noRazerMouse, language: language))
     }
 
     Divider()
 
-    Text(store.lastRefreshSummary)
+    Text(store.lastRefreshSummary.localized(language: language))
 
     Divider()
 
-    SettingsLink()
+    SettingsLink {
+      Text(AppText.string(.settings, language: language))
+    }
 
-    Button("About Razer macOS") {
+    Button(AppText.string(.aboutRazerMacOS, language: language)) {
       showAbout()
     }
 
-    Button("Quit") {
+    Button(AppText.string(.quit, language: language)) {
       NSApplication.shared.terminate(nil)
     }
     .keyboardShortcut("q")

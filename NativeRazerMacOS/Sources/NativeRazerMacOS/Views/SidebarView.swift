@@ -4,10 +4,11 @@ import SwiftUI
 struct SidebarView: View {
   let devices: [NativeDevice]
   @Binding var selection: NativeDevice.ID?
+  @Environment(\.appLanguage) private var language
 
   var body: some View {
     List(selection: $selection) {
-      Section("Devices") {
+      Section(AppText.string(.devices, language: language)) {
         ForEach(devices) { device in
           HStack(spacing: 10) {
             Image(systemName: "computermouse")

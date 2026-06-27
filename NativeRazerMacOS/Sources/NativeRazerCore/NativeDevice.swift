@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NativeDevice: Identifiable, Equatable, Sendable {
   public let id: String
   public let name: String
@@ -5,6 +7,7 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
   public var connection: String
   public let capabilities: [DeviceCapability]
   public var bridgeStatus: String
+  public var bridgeStatusMessage: AppMessage
   public var hardwareInternalId: Int?
   public var controlConfiguration: DeviceControlConfiguration
   public var controlState: DeviceControlState
@@ -16,6 +19,7 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
     connection: String,
     capabilities: [DeviceCapability],
     bridgeStatus: String,
+    bridgeStatusMessage: AppMessage? = nil,
     hardwareInternalId: Int? = nil,
     controlConfiguration: DeviceControlConfiguration = .none,
     controlState: DeviceControlState = DeviceControlState()
@@ -26,8 +30,31 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
     self.connection = connection
     self.capabilities = capabilities
     self.bridgeStatus = bridgeStatus
+    self.bridgeStatusMessage = bridgeStatusMessage ?? .passthrough(bridgeStatus)
     self.hardwareInternalId = hardwareInternalId
     self.controlConfiguration = controlConfiguration
     self.controlState = controlState
+  }
+
+  public mutating func setBridgeStatus(_ message: AppMessage) {
+    bridgeStatusMessage = message
+    bridgeStatus = message.localized(language: .english)
+  }
+
+  public func localizedConnection(language: AppLanguage) -> String {
+    if connection == "USB receiver / wired" {
+      return AppText.string(.connectionUSBReceiverWired, language: language)
+    }
+
+    if connection.hasPrefix("librazermacos internal #") {
+      let identifier = connection.replacingOccurrences(of: "librazermacos internal #", with: "")
+      return AppText.formatted(
+        .connectionLibrazermacosInternal,
+        language: language,
+        identifier
+      )
+    }
+
+    return connection
   }
 }

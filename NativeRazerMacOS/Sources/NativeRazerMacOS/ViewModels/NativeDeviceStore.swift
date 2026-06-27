@@ -9,7 +9,7 @@ final class NativeDeviceStore {
   private(set) var devices: [NativeDevice]
   private(set) var stages: [MigrationStage]
   var selectedDeviceId: NativeDevice.ID?
-  var lastRefreshSummary: String
+  var lastRefreshSummary: AppMessage
 
   init(
     inventory: MigrationInventory = MigrationInventory(),
@@ -20,7 +20,7 @@ final class NativeDeviceStore {
     self.devices = inventory.devices
     self.stages = inventory.stages
     self.selectedDeviceId = inventory.primaryDevice?.id ?? inventory.devices.first?.id
-    self.lastRefreshSummary = "Ready to bridge \(inventory.bridgeSourcePath)"
+    self.lastRefreshSummary = .readyToBridge(path: inventory.bridgeSourcePath)
     refresh()
   }
 
@@ -47,7 +47,7 @@ final class NativeDeviceStore {
       guard let hardwareMouse = hardwareMice.first(where: { $0.productId == device.productId }) else {
         var previewDevice = device
         previewDevice.hardwareInternalId = nil
-        previewDevice.bridgeStatus = "Controls available in preview; hardware not matched."
+        previewDevice.setBridgeStatus(.controlsPreviewHardwareNotMatched)
         return previewDevice
       }
 
@@ -55,9 +55,7 @@ final class NativeDeviceStore {
       let readSucceeded = hardwareMouse.dpi > 0 || hardwareMouse.pollingRate > 0
       connectedDevice.connection = "librazermacos internal #\(hardwareMouse.internalDeviceId)"
       connectedDevice.hardwareInternalId = hardwareMouse.internalDeviceId
-      connectedDevice.bridgeStatus = readSucceeded
-        ? "Connected through librazermacos bridge."
-        : "Detected through librazermacos; settings read timed out."
+      connectedDevice.setBridgeStatus(readSucceeded ? .connected : .detectedReadTimedOut)
       connectedDevice.controlState.dpi = normalizedDPI(hardwareMouse.dpi, fallback: device.controlState.dpi)
       connectedDevice.controlState.pollingRate = normalizedPollingRate(
         hardwareMouse.pollingRate,
@@ -70,8 +68,8 @@ final class NativeDeviceStore {
     stages = inventory.stages
     selectedDeviceId = selectedDevice?.id ?? inventory.primaryDevice?.id
     lastRefreshSummary = hardwareMice.isEmpty
-      ? "Loaded \(devices.count) target; no live Razer mouse matched"
-      : "Loaded \(hardwareMice.count) live Razer mouse"
+      ? .targetLoadedNoLiveMouse(count: devices.count)
+      : .liveMouseLoaded(count: hardwareMice.count)
   }
 
   func setDPI(_ dpi: Int) {
@@ -82,7 +80,7 @@ final class NativeDeviceStore {
     let result = hardwareController.setDPI(dpi, internalDeviceId: device.hardwareInternalId)
     updateSelectedDevice { selected in
       selected.controlState.dpi = dpi
-      selected.bridgeStatus = statusText(for: result)
+      selected.setBridgeStatus(statusText(for: result))
     }
     lastRefreshSummary = summaryText(action: "DPI \(dpi)", result: result)
   }
@@ -98,7 +96,7 @@ final class NativeDeviceStore {
     )
     updateSelectedDevice { selected in
       selected.controlState.pollingRate = pollingRate
-      selected.bridgeStatus = statusText(for: result)
+      selected.setBridgeStatus(statusText(for: result))
     }
     lastRefreshSummary = summaryText(action: "\(pollingRate) Hz", result: result)
   }
@@ -125,10 +123,10 @@ final class NativeDeviceStore {
     update(&devices[index])
   }
 
-  private func statusText(for result: HardwareApplyResult) -> String {
+  private func statusText(for result: HardwareApplyResult) -> AppMessage {
     switch result {
     case .applied:
-      "Command sent through librazermacos bridge."
+      .commandSent
     case .previewOnly(let message):
       message
     case .failed(let message):
@@ -136,14 +134,14 @@ final class NativeDeviceStore {
     }
   }
 
-  private func summaryText(action: String, result: HardwareApplyResult) -> String {
+  private func summaryText(action: String, result: HardwareApplyResult) -> AppMessage {
     switch result {
     case .applied:
-      "Sent \(action) to hardware"
+      .sent(action: action)
     case .previewOnly:
-      "Previewed \(action); hardware not matched"
+      .previewed(action: action)
     case .failed:
-      "Could not apply \(action)"
+      .couldNotApply(action: action)
     }
   }
 }

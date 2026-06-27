@@ -8,9 +8,10 @@ struct DeviceControlsView: View {
 
   @State private var draftDPI: Double = 1_600
   @State private var draftPollingRate: Int = 1_000
+  @Environment(\.appLanguage) private var language
 
   var body: some View {
-    GroupBox("Device controls") {
+    GroupBox(AppText.string(.deviceControls, language: language)) {
       VStack(alignment: .leading, spacing: 18) {
         if let dpiConfiguration = device.controlConfiguration.dpi {
           dpiControl(dpiConfiguration)
@@ -40,7 +41,7 @@ struct DeviceControlsView: View {
   private func dpiControl(_ configuration: DPIConfiguration) -> some View {
     VStack(alignment: .leading, spacing: 8) {
       HStack {
-        Label("DPI", systemImage: "scope")
+        Label(AppText.string(.capabilityDPI, language: language), systemImage: "scope")
           .font(.headline)
 
         Spacer()
@@ -67,7 +68,7 @@ struct DeviceControlsView: View {
       Button {
         onSetDPI(Int(draftDPI))
       } label: {
-        Label("Set DPI", systemImage: "checkmark.circle")
+        Label(AppText.string(.setDPI, language: language), systemImage: "checkmark.circle")
       }
       .buttonStyle(.borderedProminent)
     }
@@ -75,10 +76,10 @@ struct DeviceControlsView: View {
 
   private var pollingRateControl: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Label("Polling rate", systemImage: "speedometer")
+      Label(AppText.string(.pollingRate, language: language), systemImage: "speedometer")
         .font(.headline)
 
-      Picker("Polling rate", selection: $draftPollingRate) {
+      Picker(AppText.string(.pollingRate, language: language), selection: $draftPollingRate) {
         ForEach(device.controlConfiguration.pollingRates, id: \.self) { rate in
           Text("\(rate) Hz").tag(rate)
         }
@@ -88,24 +89,28 @@ struct DeviceControlsView: View {
       Button {
         onSetPollingRate(draftPollingRate)
       } label: {
-        Label("Save Polling Rate", systemImage: "checkmark.circle")
+        Label(AppText.string(.savePollingRate, language: language), systemImage: "checkmark.circle")
       }
     }
   }
 
   private var batteryStatus: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Label("Battery", systemImage: "battery.75percent")
+      Label(AppText.string(.battery, language: language), systemImage: "battery.75percent")
         .font(.headline)
 
       if let batteryLevel = device.controlState.batteryLevel {
         ProgressView(value: Double(batteryLevel), total: 100) {
-          Text(device.controlState.isCharging == true ? "Charging" : "Battery")
+          Text(
+            device.controlState.isCharging == true
+              ? AppText.string(.charging, language: language)
+              : AppText.string(.battery, language: language)
+          )
         } currentValueLabel: {
           Text("\(batteryLevel)%")
         }
       } else {
-        Text("Battery status unavailable from the current bridge read.")
+        Text(AppText.string(.batteryStatusUnavailable, language: language))
           .foregroundStyle(.secondary)
       }
     }
@@ -113,10 +118,10 @@ struct DeviceControlsView: View {
 
   private var lightingControls: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Label("Lighting", systemImage: "lightbulb")
+      Label(AppText.string(.lighting, language: language), systemImage: "lightbulb")
         .font(.headline)
 
-      Text("This device profile does not expose lighting controls.")
+      Text(AppText.string(.lightingUnavailable, language: language))
         .foregroundStyle(.secondary)
     }
   }

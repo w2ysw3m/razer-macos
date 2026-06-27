@@ -11,6 +11,7 @@ Razer macOS 是一个开源的 macOS Razer 外设控制 app。这个 fork 正在
 - `NativeRazerMacOS` 中已有原生 SwiftUI/AppKit app shell
 - macOS 菜单栏常驻状态项
 - 原生 Settings 窗口，支持通过 `ServiceManagement` 注册 Launch at Login，并提供 macOS Login Items 快捷入口
+- 原生界面支持英文、简体中文、繁体中文语言选择
 - 原生 DPI 与回报率控制
 - bridge 可以从硬件读取时显示电池/状态
 - Swift 到 `librazermacos` 的 C bridge
@@ -89,7 +90,7 @@ count=1
 swift test --package-path NativeRazerMacOS
 ```
 
-原生 app 在主窗口关闭后仍会保持运行。可从菜单栏项目、Dock 或 Razer command menu 重新打开。Launch at Login 可在原生 Settings 窗口中设置。
+原生 app 在主窗口关闭后仍会保持运行。可从菜单栏项目、Dock 或 Razer command menu 重新打开。Launch at Login 与语言选择可在原生 Settings 窗口中设置。
 
 ## Legacy Electron app
 

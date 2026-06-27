@@ -2,27 +2,28 @@ import Foundation
 import Observation
 import ServiceManagement
 import AppKit
+import NativeRazerCore
 
 @Observable
 final class LaunchAtLoginController {
-  private(set) var statusMessage: String = ""
+  private(set) var statusMessage: AppMessage?
 
   var isEnabled: Bool {
     SMAppService.mainApp.status == .enabled
   }
 
-  var statusDescription: String {
+  func statusDescription(language: AppLanguage) -> String {
     switch SMAppService.mainApp.status {
     case .enabled:
-      "Enabled"
+      AppText.string(.statusEnabled, language: language)
     case .notRegistered:
-      "Disabled"
+      AppText.string(.statusDisabled, language: language)
     case .notFound:
-      "Unavailable"
+      AppText.string(.statusUnavailable, language: language)
     case .requiresApproval:
-      "Requires approval"
+      AppText.string(.statusRequiresApproval, language: language)
     @unknown default:
-      "Unknown"
+      AppText.string(.statusUnknown, language: language)
     }
   }
 
@@ -32,15 +33,15 @@ final class LaunchAtLoginController {
         if SMAppService.mainApp.status != .enabled {
           try SMAppService.mainApp.register()
         }
-        statusMessage = "Launch at login is enabled."
+        statusMessage = .launchAtLoginEnabled
       } else {
         if SMAppService.mainApp.status == .enabled {
           try SMAppService.mainApp.unregister()
         }
-        statusMessage = "Launch at login is disabled."
+        statusMessage = .launchAtLoginDisabled
       }
     } catch {
-      statusMessage = error.localizedDescription
+      statusMessage = .passthrough(error.localizedDescription)
     }
   }
 

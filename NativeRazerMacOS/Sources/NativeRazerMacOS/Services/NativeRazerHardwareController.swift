@@ -1,5 +1,6 @@
 import Foundation
 import NativeRazerBridgeC
+import NativeRazerCore
 
 struct HardwareMouseSnapshot: Equatable {
   let internalDeviceId: Int
@@ -12,8 +13,8 @@ struct HardwareMouseSnapshot: Equatable {
 
 enum HardwareApplyResult: Equatable {
   case applied
-  case previewOnly(String)
-  case failed(String)
+  case previewOnly(AppMessage)
+  case failed(AppMessage)
 }
 
 protocol NativeRazerHardwareControlling {
@@ -49,20 +50,20 @@ final class NativeRazerHardwareController: NativeRazerHardwareControlling {
 
   func setDPI(_ dpi: Int, internalDeviceId: Int?) -> HardwareApplyResult {
     guard let internalDeviceId else {
-      return .previewOnly("No connected librazermacos mouse matched this device.")
+      return .previewOnly(.hardwareNoConnectedMouse)
     }
 
     let result = NativeRazerSetMouseDPI(Int32(internalDeviceId), UInt16(clamping: dpi))
-    return result == 0 ? .applied : .failed("librazermacos rejected DPI update.")
+    return result == 0 ? .applied : .failed(.hardwareRejectedDPI)
   }
 
   func setPollingRate(_ pollingRate: Int, internalDeviceId: Int?) -> HardwareApplyResult {
     guard let internalDeviceId else {
-      return .previewOnly("No connected librazermacos mouse matched this device.")
+      return .previewOnly(.hardwareNoConnectedMouse)
     }
 
     let result = NativeRazerSetMousePollingRate(Int32(internalDeviceId), UInt16(clamping: pollingRate))
-    return result == 0 ? .applied : .failed("librazermacos rejected polling-rate update.")
+    return result == 0 ? .applied : .failed(.hardwareRejectedPollingRate)
   }
 
   func shutdown() {
