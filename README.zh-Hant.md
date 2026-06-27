@@ -1,0 +1,175 @@
+# Razer macOS
+
+[English](README.md) | [繁體中文](README.zh-Hant.md) | [简体中文](README.zh-Hans.md)
+
+Razer macOS 是一個開源的 macOS Razer 周邊控制 app。這個 fork 正在由 legacy Electron shell 遷移到原生 SwiftUI/AppKit app，底層繼續使用既有的 `librazermacos` IOKit/HID 驅動程式碼。
+
+目前的開發重點，是把 OpenRazer 匯入的新裝置資料真正落到 macOS 可用的控制路徑上，第一個原生驗證目標是 Razer DeathAdder V3 Pro。
+
+## 目前狀態
+
+- `NativeRazerMacOS` 內已有原生 SwiftUI/AppKit app shell
+- macOS menu-bar 常駐狀態項
+- 原生 Settings 視窗，支援透過 `ServiceManagement` 註冊 Launch at Login，並提供 macOS Login Items 捷徑
+- 原生 DPI 與回報率控制
+- bridge 可以從硬體讀到時顯示電池/狀態
+- Swift 到 `librazermacos` 的 C bridge
+- `src/devices` 裝置目錄已更新，目前有 267 個裝置 JSON profile
+- legacy Electron app 保留為參考實作與 fallback
+
+## 相容裝置與功能
+
+此倉庫有兩層支援：
+
+- legacy Electron app 保留原 razer-macos/OpenRazer 工作的廣泛裝置目錄。`src/devices` 目前有 267 個裝置 JSON profile，legacy UI 仍保留歷史的顏色、亮度、狀態、鍵盤、滑鼠、滑鼠墊、dock、eGPU、耳機與筆電相關邏輯。
+- 原生 app 的硬體驗證標準較嚴格。只有 SwiftUI/AppKit 介面、C bridge、macOS 硬體行為都已接好並測過的裝置，才會列入原生已驗證清單。DeathAdder V3 Pro 是第一個原生已驗證控制目標；這不是完整原生支援矩陣，也不代表專案只支援一款滑鼠。
+
+完整相容性矩陣：
+
+- [English compatibility matrix](docs/compatibility.md)
+- [繁體中文相容性矩陣](docs/compatibility.zh-Hant.md)
+- [简体中文兼容性矩阵](docs/compatibility.zh-Hans.md)
+
+原生已驗證控制目標：
+
+| 裝置 | Product ID | 原生控制 |
+| --- | --- | --- |
+| Razer DeathAdder V3 Pro | `0x00B7` | 偵測、DPI、回報率、電池/狀態 |
+
+legacy 目錄覆蓋：
+
+| 裝置類別 | 數量 | 目錄功能類型 |
+| --- | ---: | --- |
+| 滑鼠 | 113 | 固定顏色、光譜/呼吸/反應式效果、滑鼠亮度、DPI、回報率、電池 |
+| 鍵盤 | 119 | 固定顏色、波浪/光譜/反應式/呼吸/星光/漣漪/色輪效果、亮度 |
+| 滑鼠墊 | 8 | 固定顏色、波浪/光譜/呼吸效果、亮度 |
+| 滑鼠充電座 | 2 | 固定顏色、光譜/呼吸效果、電池 |
+| 配件 | 15 | 固定顏色、擴展波浪、光譜/呼吸效果 |
+| 耳機 | 8 | 固定顏色、光譜/呼吸效果 |
+| eGPU 外接盒 | 2 | 固定顏色、波浪/光譜/呼吸效果 |
+
+目錄使用的功能 key 包括：`static`、`spectrum`、`breathe`、`reactive`、`starlight`、`ripple`、`wheel`、`brightness`、`mouseBrightness`、`dpi`、`pollRate`、`battery`。每款裝置的完整功能列表請看完整相容性矩陣。
+
+## 已知硬體限制
+
+在目前測試機器上，原生 bridge 與 legacy Node addon 都可以透過 `librazermacos` 偵測 DeathAdder V3 Pro。
+
+原生硬體掃描輸出：
+
+```text
+productId=0x00B7 internalDeviceId=0 dpi=0 pollingRate=0
+count=1
+```
+
+裝置可以被偵測，但此硬體路徑的 DPI、回報率與電池讀回命令仍可能逾時。原生 UI 會在讀回為 `0` 時使用安全預設值，明確顯示設定讀回逾時，並只把寫入命令標示為已透過 bridge 送出。
+
+## 原生 app
+
+建置並開啟原生 app：
+
+```sh
+./script/build_and_run.sh
+```
+
+建置、開啟並驗證 app process 啟動：
+
+```sh
+./script/build_and_run.sh --verify
+```
+
+透過原生 C bridge 掃描已連接的 Razer 滑鼠：
+
+```sh
+./script/build_and_run.sh --scan-hardware
+```
+
+執行 Swift 測試：
+
+```sh
+swift test --package-path NativeRazerMacOS
+```
+
+原生 app 在主視窗關閉後仍會保持執行。可由 menu-bar 項目、Dock 或 Razer command menu 重新開啟。Launch at Login 可在原生 Settings 視窗中設定。
+
+## Legacy Electron app
+
+原 Electron app 會保留在倉庫中，直到原生 app 逐項補齊功能。它仍提供歷史 menu-bar UI、顏色效果、狀態管理與更廣的裝置覆蓋。在其他裝置類別完成原生移植並於 macOS 上驗證前，它仍是相容性參考。
+
+安裝 Node 依賴：
+
+```sh
+yarn
+```
+
+執行 Electron 開發 app：
+
+```sh
+yarn dev
+```
+
+修改驅動後重建原生 Node addon：
+
+```sh
+yarn rebuild
+```
+
+編譯 Electron app：
+
+```sh
+yarn compile
+```
+
+建立發行套件：
+
+```sh
+yarn dist
+```
+
+## 架構
+
+此倉庫目前有兩層 app，共用同一套驅動 lineage：
+
+- `NativeRazerMacOS/` 包含新的 SwiftUI/AppKit macOS app。
+- `NativeRazerMacOS/Sources/NativeRazerBridgeC/` 將 C 驅動函式暴露給 Swift。
+- `librazermacos/` 包含低階 Razer USB/HID protocol 實作。
+- `src/` 包含 legacy Electron UI、state manager、menu-bar app 與 Node addon integration。
+- `src/devices/` 包含由 OpenRazer 與原 razer-macos 工作匯入並維護的裝置 profile。
+
+長期來看，SwiftUI/AppKit app 應成為主要 macOS UI，因為它更自然地貼合 menu-bar 行為、Launch at Login、簽名、公證與 IOKit/HID integration。
+
+## 裝置支援政策
+
+新裝置支援應以 OpenRazer 裝置定義為基礎，並在可能時以實體硬體驗證。對於手上沒有的裝置，倉庫可以先匯入 ID 與 capability metadata，但 UI 控制應保持保守，直到對應硬體路徑被測過。
+
+其他裝置功能應按 capability 逐步由 legacy app 移植，而不是一次複製整個舊畫面：
+
+1. 滑鼠控制：DPI、回報率、電池、充電，以及 receiver/wired pairing 路徑。
+2. 燈光控制：固定顏色、光譜/循環效果、亮度區域與裝置特定效果限制。
+3. 狀態管理：啟動/刷新狀態、menu-bar 裝置操作與持久化。
+4. 鍵盤與配件控制：profile、layout、亮度與裝置特定功能 gate。
+5. 發行打包：已簽名並公證的原生 app、hardened runtime 與清楚的 macOS 權限說明。
+
+發行打包是 release-only 工作。它不是缺少的裝置控制功能，也不是缺少的 Launch at Login 功能；使用 `./script/build_and_run.sh` 做本地開發不需要完成 Packaging。
+
+在 capability 尚未接上原生 C bridge 並用真實裝置驗證前，應記錄為 legacy-supported，而不是 native-supported。
+
+DeathAdder V3 Pro 路徑下一個 driver-level 任務，是改善或替換 DPI、回報率與電池狀態讀回會逾時的命令。
+
+## 安裝備註
+
+已打包、已簽名、已公證的原生 build 尚未完成，因為它需要 release artifacts、簽名身份、hardened runtime 驗證與 Apple notarization credentials。本地開發請用 `./script/build_and_run.sh` 從 source 執行。
+
+legacy Electron packaging flow 仍支援 ad-hoc signing：
+
+```sh
+codesign -s - --deep --force ./dist/mac-universal/Razer\ macOS.app
+```
+
+## Credits
+
+此專案基於以下工作：
+
+- [1kc/razer-macos](https://github.com/1kc/razer-macos)
+- [openrazer/openrazer](https://github.com/openrazer/openrazer)
+- [osx-razer-blade](https://github.com/kprinssu/osx-razer-blade)
+- [osx-razer-led](https://github.com/dylanparker/osx-razer-led)

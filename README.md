@@ -1,5 +1,7 @@
 # Razer macOS
 
+[English](README.md) | [繁體中文](README.zh-Hant.md) | [简体中文](README.zh-Hans.md)
+
 Razer macOS is an open-source macOS control app for Razer peripherals. This fork is now moving away from the legacy Electron shell and toward a native SwiftUI/AppKit app backed by the existing `librazermacos` IOKit/HID driver code.
 
 The current development focus is practical macOS support for newer Razer devices imported from OpenRazer, starting with the Razer DeathAdder V3 Pro.
@@ -22,11 +24,31 @@ There are two support layers in this repository:
 - Legacy Electron app keeps the broad device catalog from the original razer-macos/OpenRazer work. The `src/devices` directory currently contains 267 device JSON profiles, and the legacy UI still owns the historical color, brightness, state, keyboard, mouse, mouse mat, dock, eGPU, headphone, and laptop logic.
 - Native app verified hardware path is stricter. A device is listed here only when the SwiftUI/AppKit surface, C bridge, and macOS hardware behavior have been wired and tested. DeathAdder V3 Pro is the first verified native control target; this is not the full native support matrix and it does not mean the project supports only one mouse.
 
+Full compatibility matrix:
+
+- [English compatibility matrix](docs/compatibility.md)
+- [繁體中文相容性矩陣](docs/compatibility.zh-Hant.md)
+- [简体中文兼容性矩阵](docs/compatibility.zh-Hans.md)
+
 Native verified control targets:
 
 | Device | Product ID | Native controls |
 | --- | --- | --- |
 | Razer DeathAdder V3 Pro | `0x00B7` | Discovery, DPI, polling rate, battery/status |
+
+Legacy catalog coverage:
+
+| Device class | Count | Catalog feature families |
+| --- | ---: | --- |
+| Mice | 113 | Static color, spectrum/breathing/reactive effects, mouse brightness, DPI, polling rate, battery |
+| Keyboards | 119 | Static color, wave/spectrum/reactive/breathing/starlight/ripple/wheel effects, brightness |
+| Mouse mats | 8 | Static color, wave/spectrum/breathing effects, brightness |
+| Mouse docks | 2 | Static color, spectrum/breathing effects, battery |
+| Accessories | 15 | Static color, extended wave, spectrum/breathing effects |
+| Headphones | 8 | Static color, spectrum/breathing effects |
+| eGPU enclosures | 2 | Static color, wave/spectrum/breathing effects |
+
+Feature keys used by the catalog: `static`, `spectrum`, `breathe`, `reactive`, `starlight`, `ripple`, `wheel`, `brightness`, `mouseBrightness`, `dpi`, `pollRate`, and `battery`. See the full matrix for the per-device feature list.
 
 ## Known Hardware Limitation
 
