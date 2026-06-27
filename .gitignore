@@ -118,3 +118,6 @@ yarn.lock
 # vscode files
 .vscode/
 .vscode/settings.json
+.omo/
+NativeRazerMacOS/.build/
+NativeRazerMacOS/.swiftpm/
