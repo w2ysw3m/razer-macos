@@ -1,20 +1,18 @@
 import SwiftUI
 
 struct SettingsView: View {
-  @AppStorage("launchAtLogin") private var launchAtLogin = false
-  @AppStorage("enableExperimentalBridge") private var enableExperimentalBridge = false
-
   var body: some View {
     TabView {
       Form {
-        Toggle("Launch at login", isOn: $launchAtLogin)
-        Toggle("Enable experimental C bridge", isOn: $enableExperimentalBridge)
+        LabeledContent("Runtime", value: "SwiftUI/AppKit")
+        LabeledContent("Device bridge", value: "Planned")
+        LabeledContent("Signing", value: "Planned")
       }
       .padding()
       .tabItem {
         Label("General", systemImage: "gearshape")
       }
     }
-    .frame(width: 460, height: 220)
+    .frame(width: 420, height: 180)
   }
 }
