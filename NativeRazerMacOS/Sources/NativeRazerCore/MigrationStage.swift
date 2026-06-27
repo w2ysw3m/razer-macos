@@ -13,7 +13,7 @@ public enum MigrationStage: String, CaseIterable, Identifiable, Sendable {
     case .cBridge:
       "Swift module boundary for librazermacos and IOKit/HID calls."
     case .deviceControls:
-      "Native controls for DPI, polling rate, lighting, and battery state."
+      "Native controls for DPI, polling rate, and hardware status."
     case .packaging:
       "Signing, hardened runtime, notarization, and permission copy."
     }

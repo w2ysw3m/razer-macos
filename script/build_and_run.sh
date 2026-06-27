@@ -5,6 +5,7 @@ MODE="${1:-run}"
 APP_NAME="NativeRazerMacOS"
 BUNDLE_ID="com.w2ysw3m.NativeRazerMacOS"
 MIN_SYSTEM_VERSION="14.0"
+APP_VERSION="0.4.14"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PACKAGE_DIR="$ROOT_DIR/NativeRazerMacOS"
@@ -43,6 +44,10 @@ build_bundle() {
   <string>$APP_NAME</string>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
+  <key>CFBundleShortVersionString</key>
+  <string>$APP_VERSION</string>
+  <key>CFBundleVersion</key>
+  <string>$APP_VERSION</string>
   <key>LSMinimumSystemVersion</key>
   <string>$MIN_SYSTEM_VERSION</string>
   <key>NSPrincipalClass</key>

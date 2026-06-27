@@ -20,10 +20,17 @@ struct NativeRazerMacOSApp: App {
     MenuBarExtra("Razer", systemImage: "computermouse") {
       MenuBarStatusView(
         store: appModel.store,
-        openMainWindow: appModel.showMainWindow
+        openMainWindow: appModel.showMainWindow,
+        showAbout: appModel.showAboutPanel
       )
     }
     .commands {
+      CommandGroup(replacing: .appInfo) {
+        Button("About Razer macOS") {
+          appModel.showAboutPanel()
+        }
+      }
+
       CommandMenu("Razer") {
         Button("Open Razer macOS") {
           appModel.showMainWindow()

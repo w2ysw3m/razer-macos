@@ -31,6 +31,33 @@ final class NativeAppModel {
     store.refresh()
   }
 
+  func showAboutPanel() {
+    let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+      ?? "0.4.14"
+    let credits = NSAttributedString(
+      string: """
+      Native SwiftUI/AppKit control app for Razer devices on macOS.
+
+      Current native surface:
+      - Menu-bar resident app
+      - Launch at Login
+      - DeathAdder V3 Pro discovery
+      - DPI and polling-rate controls through librazermacos
+      - Hardware status with conservative timeout reporting
+
+      Built on 1kc/razer-macos, librazermacos, and OpenRazer device work.
+      """
+    )
+
+    NSApp.orderFrontStandardAboutPanel(options: [
+      .applicationName: "Razer macOS Native",
+      .applicationVersion: version,
+      .version: "SwiftUI/AppKit + librazermacos bridge",
+      .credits: credits
+    ])
+    NSApp.activate(ignoringOtherApps: true)
+  }
+
   func shutdown() {
     store.shutdown()
   }

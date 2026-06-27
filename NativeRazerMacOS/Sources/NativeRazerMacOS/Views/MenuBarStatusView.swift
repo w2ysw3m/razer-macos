@@ -4,6 +4,7 @@ import SwiftUI
 struct MenuBarStatusView: View {
   let store: NativeDeviceStore
   let openMainWindow: () -> Void
+  let showAbout: () -> Void
 
   var body: some View {
     Button("Open Razer macOS") {
@@ -42,6 +43,10 @@ struct MenuBarStatusView: View {
     Text(store.lastRefreshSummary)
 
     Divider()
+
+    Button("About Razer macOS") {
+      showAbout()
+    }
 
     Button("Quit") {
       NSApplication.shared.terminate(nil)

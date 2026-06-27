@@ -1,282 +1,134 @@
-<meta name="msvalidate.01" content="62243DA724E3CF411BD1E31EBA2175E1" />
-<p align="center">
-  <img src="resources/hero.png" alt="keyboard demo pic" />
-  <p align="center">Open source color effects manager for Razer devices on macOS</p>
-</p>
+# Razer macOS
 
-<p align="center">
-  <img src="screenshots/dark.png">
-</p>
+Razer macOS is an open-source macOS control app for Razer peripherals. This fork is now moving away from the legacy Electron shell and toward a native SwiftUI/AppKit app backed by the existing `librazermacos` IOKit/HID driver code.
 
-- **Supporting Razer devices** Keyboards, mice, mouse mats, eGPUs and blade laptops
-- **Custom color picking** Choose your own colors for static, reactive and starlight effects
-- **Persistent color settings** Color effects are saved to onboard memory
-- **Works on the latest macOS** Including Intel and Apple Silicon. There are no current plans from Razer to support macOS ([source](https://mysupport.razer.com/app/answers/detail/a_id/1381/kw/macOS))
+The current development focus is practical macOS support for newer Razer devices imported from OpenRazer, starting with the Razer DeathAdder V3 Pro.
 
-## Important note
-This is not the original repo the original repo is from [1kc/librazermacos](https://github.com/1kc/razer-macos) I forked this repo to maintain it as the original seems to be abandoned.
+## Current Status
 
-## Download
+- Native SwiftUI/AppKit app shell in `NativeRazerMacOS`
+- macOS menu-bar resident app with a persistent status item
+- Native settings window with Launch at Login support through `ServiceManagement`
+- Native device controls for DPI and polling rate
+- Battery/status display when the bridge can read it from hardware
+- C bridge from Swift into `librazermacos`
+- Refreshed device catalog under `src/devices` with 267 device JSON profiles
+- Legacy Electron app retained as a reference implementation and fallback
 
-[Latest release](https://github.com/stickoking/razer-macos/releases)
+The native app currently targets:
 
-## Installation instructions
+| Device | Product ID | Native controls |
+| --- | --- | --- |
+| Razer DeathAdder V3 Pro | `0x00B7` | Discovery, DPI, polling rate, battery/status |
 
-Install by drag and drop to Applications.
-If you get a security warning when opening the app, you need to go to your Mac's "System Preferences", "Security and Privacy", "General" and click "Open" at the bottom to allow Razer macOS to run.
+## Known Hardware Limitation
 
-Please see FAQ section below if color changes are not working, otherwise open a new issue.
+On the current test machine, the native bridge and the legacy Node addon both detect the DeathAdder V3 Pro through `librazermacos`.
 
-## Device support
+The native hardware probe reports:
 
-- ⌨️ Keyboard
-- 🖱️ Mouse
-- 📜 Mouse mat
-- 🌈 e-GPU
-- 🎧 Headphones and stand
-- 💻 Blade laptop
-- 🔊 Speakers
-- 🍺 Mug
-- ⭐️ And More
+```text
+productId=0x00B7 internalDeviceId=0 dpi=0 pollingRate=0
+count=1
+```
 
-Confirmed working for:
+The device is detected, but DPI, polling-rate, and battery readback commands can still time out on this hardware path. The native UI therefore uses safe default values when readback returns `0`, clearly reports that settings readback timed out, and only reports write commands as sent through the bridge.
 
-Keyboards:
+## Native App
 
-- Razer Anansi
-- Razer BlackWidow 2019
-- Razer BlackWidow Chroma
-- Razer BlackWidow Chroma Tournament Edition
-- Razer BlackWidow Chroma V2
-- Razer BlackWidow Elite
-- Razer BlackWidow Essential
-- Razer BlackWidow Lite
-- Razer BlackWidow Overwatch
-- Razer BlackWidow Stealth
-- Razer BlackWidow Stealth Edition
-- Razer BlackWidow Ultimate 2012
-- Razer BlackWidow Ultimate 2013
-- Razer BlackWidow Ultimate 2016
-- Razer BlackWidow V3
-- Razer BlackWidow V3 Mini Hyperspeed
-- Razer BlackWidow V3 Pro (wired)
-- Razer BlackWidow V3 TK
-- Razer BlackWidow X Chroma
-- Razer BlackWidow X Chroma Tournament Edition
-- Razer BlackWidow X Chroma Ultimate
-- Razer BlackWidow V4 PRO
-- Razer BlackWidow V4 75%
-- Razer Cynosa Chroma
-- Razer Cynosa Lite
-- Razer Cynosa V2
-- Razer Deathstalker Chroma
-- Razer Deathstalker Expert
-- Razer Deathstalker V2
-- Razer Huntsman
-- Razer Huntsman Elite
-- Razer Huntsman Mini
-- Razer Huntsman Mini (JP)
-- Razer Huntsman Tournament Edition
-- Razer Huntsman V2
-- Razer Huntsman V2 TKL
-- Razer Huntsman V2 Analog
-- Razer Nostromo
-- Razer Orbweaver
-- Razer Orbweaver Chroma
-- Razer Ornata
-- Razer Ornata Chroma
-- Razer Ornata Chroma V2
-- Razer Tartarus
-- Razer Tartarus Chroma
-- Razer Tartarus V2
+Build and open the native app:
 
-Mice:
+```sh
+./script/build_and_run.sh
+```
 
-- Razer Abyssus 
-- Razer Abyssus 1800
-- Razer Abyssus 2000
-- Razer Abyssus Elite DVA Edition
-- Razer Abyssus Essential
-- Razer Abyssus V2 (under older mouse effects)
-- Razer Basilisk
-- Razer Basilisk Essential
-- Razer Basilisk Ultimate
-- Razer Basilisk V2
-- Razer Basilisk V3
-- Razer DeathAdder 3 5G
-- Razer DeathAdder 1800
-- Razer DeathAdder 2013 (under older mouse effects)
-- Razer DeathAdder 3500
-- Razer DeathAdder Chroma
-- Razer DeathAdder Elite
-- Razer DeathAdder Essential
-- Razer DeathAdder Essential White Edition
-- Razer DeathAdder Essential (2021)
-- Razer DeathAdder V2
-- Razer DeathAdder V2 Mini
-- Razer DeathAdder V2 Pro (wired and wireless)
-- Razer Diamondback Chroma
-- Razer Imperator
-- Razer Lancehead Tournament Edition
-- Razer Lancehead Wired
-- Razer Lancehead Wireless (and wired)
-- Razer Mamba 2012 (wired and wireless)
-- Razer Mamba Elite
-- Razer Mamba Tournament Edition
-- Razer Mamba Wired
-- Razer Mamba Wireless (and wired)
-- Razer Naga 2012
-- Razer Naga 2014
-- Razer Naga Chroma
-- Razer Naga Hex
-- Razer Naga Hex Red
-- Razer Naga Hex V2
-- Razer Naga Left Handed 2020
-- Razer Naga Pro (wired and wireless)
-- Razer Naga Trinity
-- Razer Naga X
-- Razer Orochi 2011
-- Razer Orochi 2013
-- Razer Orochi Chroma
-- Razer Ouroboros
-- Razer Taipan
-- Razer Viper
-- Razer Viper 8KHz
-- Razer Viper Mini
-- Razer Viper Ultimate (wired and wireless)
+Build, open, and verify the app process starts:
 
-Mouse mats:
+```sh
+./script/build_and_run.sh --verify
+```
 
-- Razer Firefly
-- Razer Firefly Hyperflux
-- Razer Firefly V2
-- Razer Goliathus Chroma
-- Razer Goliathus Chroma Extended
+Scan connected Razer mice through the native C bridge:
 
-e-GPUs:
+```sh
+./script/build_and_run.sh --scan-hardware
+```
 
-- Razer Core X Chroma
+Run Swift tests:
 
-Headphones and stand:
+```sh
+swift test --package-path NativeRazerMacOS
+```
 
-- Razer Base Station V2 Chroma
-- Razer Kraken
-- Razer Kraken 7.1
-- Razer Kraken 7.1 (Alternate)
-- Razer Kraken Kitty Edition
-- Razer Kraken Ultimate
-- Razer Kraken V2
+The native app keeps running after its main window is closed. Reopen it from the menu-bar item, Dock, or the Razer command menu. Launch at Login is available from the native Settings window.
 
-Laptops:
+## Legacy Electron App
 
-- Razer Blade 2018
-- Razer Blade 2019 Advanced
-- Razer Blade 2018 Base
-- Razer Blade 2019 Base
-- Razer Blade 2018 Mercury
-- Razer Blade Late-2016
-- Razer Blade Mid-2019 Mercury
-- Razer Blade Pro 2017
-- Razer Blade Pro 2017 Full HD
-- Razer Blade Pro Late-2016
-- Razer Blade Stealth
-- Razer Blade Stealth 2019
-- Razer Blade Stealth Late-2016
-- Razer Blade Stealth Mid-2017
-- Razer Blade Stealth Late-2017
-- Razer Blade Stealth Late-2019
-- Razer Blade Studio Edition 2019
-- Razer Blade QHD
+The original Electron app remains in the repository while the native app catches up feature by feature. It still provides the historical menu-bar UI, color effects, state management, and broader device coverage.
 
-Speakers:
+Install Node dependencies:
 
-- Razer Nommo Chroma
-- Razer Nommo Pro
+```sh
+yarn
+```
 
-Mugs: 
+Run the Electron development app:
 
-- Razer Chroma Mug
-- Razer Chroma Base
-- Razer Chroma HDK
+```sh
+yarn dev
+```
 
-Accessories:
+Rebuild the native Node addon after driver changes:
 
-- Razer Mouse Bungee V3 Chroma
-- Razer Mouse Charging Dock
-- Razer Thunderbolt 4 Dock Chroma
+```sh
+yarn rebuild
+```
 
-Please feel free to open pull requests for new devices you have tested.
+Compile the Electron app:
 
-## FAQ
+```sh
+yarn compile
+```
 
-Q: Selecting a colour setting has no effect on my keyboard.
+Build a distribution package:
 
-A: It is possible that a wrong on-board keyboard profile has been selected. Change to a different profile and try again. See your device manual for specific instructions on how to switch profiles.
+```sh
+yarn dist
+```
 
-Q: Menu says "No device found".
+## Architecture
 
-A: Use the "Refresh Device List" option, which can be found when pressing the Razer OS icon on the top menu bar.
+The repository currently has two application layers over the same driver lineage:
 
-Q: How do I customize and rebind keys?
+- `NativeRazerMacOS/` contains the new SwiftUI/AppKit macOS app.
+- `NativeRazerMacOS/Sources/NativeRazerBridgeC/` exposes the C driver functions to Swift.
+- `librazermacos/` contains the low-level Razer USB/HID protocol implementation.
+- `src/` contains the legacy Electron UI, state manager, menu-bar app, and Node addon integration.
+- `src/devices/` contains device profiles imported and maintained from OpenRazer and the previous razer-macos work.
 
-You might find the [Karabiner-elements](https://karabiner-elements.pqrs.org/) tool helpful.
+Long-term, the SwiftUI/AppKit app should become the primary macOS UI because it fits menu-bar behavior, Launch at Login, signing, notarization, and IOKit/HID integration more naturally than Electron.
 
 ## Device Support Policy
 
-Ongoing new device support will be provided on a volunteer contribution basis, as it is difficult for someone who does not own the physical devices to be adding support and conducting tests.
+New-device support should be grounded in OpenRazer device definitions, then verified on real hardware whenever possible. For devices not physically available, the repo can import identifiers and capability metadata, but UI controls should stay conservative until a matching hardware path is tested.
 
-## Developer usage
+For the DeathAdder V3 Pro path, the next driver-level task is improving or replacing the timed-out settings readback commands for DPI, polling rate, and battery state.
 
-    git clone --recursive https://github.com/stickoking/razer-macos
+## Installation Notes
 
-Ensure xcode command line tools are installed,
+Packaged, signed, and notarized native builds are not complete yet. For local development, run from source with `./script/build_and_run.sh`.
 
-If you have a paid Apple Developer account, edit `release.sh` with your details.
+The legacy Electron packaging flow still supports ad-hoc signing:
 
- Afterwards, to automatically build, sign, and/or notarize (if applicable,) run in Terminal: `./release.sh`
-
- Ad-hoc signing will be used if account information is left empty.
-
-
-
- Or build manually:
-
-Install node package dependencies:
-
-    yarn
-
-Run development server:
-
-    yarn dev
-
-During development, every time the driver code has been updated, a rebuild is required:
-
-    yarn rebuild
-
-For building a distribution ready app and dmg:
-
-    yarn dist
-
-Sign the universal package before moving to /Applications folder with ad-hoc signing:
-
-    codesign -s - --deep --force ./dist/mac-universal/Razer\ macOS.app
-
-## Implementation
-
-Project includes both hardware drivers and user interface.
-
-Drivers are ported from the [openrazer](https://github.com/openrazer/openrazer) project for Linux.
-The goal is to support all devices from openrazer on macOS.
-
-An Electron macOS menu bar app is used for the user interface.
-The C driver is exposed as a native Node.js addon using node-addon-api, which gets invoked by Electron at runtime to send packets to devices.
-
-Adding support for new peripherals types requires porting from the openrazer project. See [wiki](https://github.com/1kc/razer-macos/wiki).
+```sh
+codesign -s - --deep --force ./dist/mac-universal/Razer\ macOS.app
+```
 
 ## Credits
 
-Builds on work done by these amazing projects:
+This project builds on work from:
 
-- [openrazer](https://github.com/openrazer/openrazer)
+- [1kc/razer-macos](https://github.com/1kc/razer-macos)
+- [openrazer/openrazer](https://github.com/openrazer/openrazer)
 - [osx-razer-blade](https://github.com/kprinssu/osx-razer-blade)
 - [osx-razer-led](https://github.com/dylanparker/osx-razer-led)
