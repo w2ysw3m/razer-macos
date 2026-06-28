@@ -15,6 +15,8 @@ The current development focus is practical macOS support for newer Razer devices
 - Native device controls for DPI and polling rate
 - Battery/status display when the bridge can read it from hardware
 - C bridge from Swift into `librazermacos`
+- Native release packaging script for Developer ID signed zip/dmg artifacts
+- GitHub Actions workflow for signed, notarized GitHub Releases
 - Refreshed device catalog under `src/devices` with 267 device JSON profiles
 - Legacy Electron app retained as a reference implementation and fallback
 
@@ -92,6 +94,54 @@ swift test --package-path NativeRazerMacOS
 
 The native app keeps running after its main window is closed. Reopen it from the menu-bar item, Dock, or the Razer command menu. Launch at Login and language selection are available from the native Settings window.
 
+## Release Packaging
+
+Create local native release artifacts:
+
+```sh
+APP_VERSION=0.4.14 MACOS_SIGNING_MODE=auto ./script/package_native.sh
+```
+
+For a Developer ID signed local package, make sure a `Developer ID Application` identity is installed in the login keychain, then run:
+
+```sh
+APP_VERSION=0.4.14 MACOS_SIGNING_MODE=required ./script/package_native.sh
+```
+
+The script writes:
+
+- `dist/release/NativeRazerMacOS-<version>-macOS.zip`
+- `dist/release/NativeRazerMacOS-<version>-macOS.dmg`
+- `dist/release/SHA256SUMS.txt`
+
+Ad-hoc packages are useful for local testing only:
+
+```sh
+APP_VERSION=0.4.14 MACOS_SIGNING_MODE=adhoc ./script/package_native.sh
+```
+
+Public downloads should be Developer ID signed and notarized. GitHub Releases are built by `.github/workflows/native-release.yml` when a `v*` tag is pushed or when the `Native macOS Release` workflow is run manually.
+
+Required repository secrets:
+
+| Secret | Purpose |
+| --- | --- |
+| `MACOS_CERTIFICATE_P12_BASE64` | Base64-encoded Developer ID Application `.p12` |
+| `MACOS_CERTIFICATE_PASSWORD` | Password for the `.p12` file |
+| `MACOS_CODESIGN_IDENTITY` | Optional explicit signing identity when the keychain has more than one Developer ID identity |
+| `APPLE_API_KEY_BASE64` | Base64-encoded App Store Connect API key `.p8` for notarization |
+| `APPLE_API_KEY_ID` | App Store Connect API key id |
+| `APPLE_API_ISSUER_ID` | App Store Connect issuer id |
+
+Run a release from the command line after the secrets are configured:
+
+```sh
+git tag v0.4.14
+git push fork v0.4.14
+```
+
+Or use GitHub Actions workflow dispatch with `version=0.4.14`. The workflow runs Swift tests, signs the native app and disk image, submits notarization, staples the app and disk image, uploads build artifacts, and publishes the GitHub Release assets.
+
 ## Legacy Electron App
 
 The original Electron app remains in the repository while the native app catches up feature by feature. It still provides the historical menu-bar UI, color effects, state management, and broader device coverage. It is the compatibility reference for other device classes until the native app ports those controls and proves them on macOS.
@@ -148,9 +198,9 @@ Other device functionality should be moved over from the legacy app by capabilit
 2. Lighting controls: static color, spectrum/cycle effects, brightness zones, and per-device effect constraints.
 3. State management: startup/refresh states, menu-bar device actions, and persistence.
 4. Keyboard and accessory controls: profile, layout, brightness, and device-specific feature gates.
-5. Distribution packaging: signed and notarized native app with hardened runtime and clear macOS permission copy.
+5. Distribution packaging: maintain signed and notarized native app artifacts with hardened runtime and clear macOS permission copy.
 
-Distribution packaging is release-only work. It is not a missing device-control feature, not a missing Launch at Login feature, and Packaging is not required for local development with `./script/build_and_run.sh`.
+Distribution packaging is now wired through `script/package_native.sh` and `.github/workflows/native-release.yml`. It is not a missing device-control feature, not a missing Launch at Login feature, and packaging is not required for local development with `./script/build_and_run.sh`.
 
 Until a capability is connected through the native C bridge and verified against a real device, it should remain documented as legacy-supported rather than native-supported.
 
@@ -158,13 +208,9 @@ For the DeathAdder V3 Pro path, the next driver-level task is improving or repla
 
 ## Installation Notes
 
-Packaged, signed, and notarized native builds are not complete yet because they require release artifacts, signing identity, hardened runtime validation, and Apple notarization credentials. For local development, run from source with `./script/build_and_run.sh`.
+End users should install the latest signed and notarized native `.dmg` or `.zip` from GitHub Releases once a release has been published. For local development, run from source with `./script/build_and_run.sh`.
 
-The legacy Electron packaging flow still supports ad-hoc signing:
-
-```sh
-codesign -s - --deep --force ./dist/mac-universal/Razer\ macOS.app
-```
+The legacy Electron packaging flow remains in the repository for reference, but the native SwiftUI/AppKit app is the primary release target.
 
 ## Credits
 
