@@ -162,14 +162,27 @@ jobs:
 
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             gh release upload "$RELEASE_TAG" dist/release/* --clobber
-            gh release edit "$RELEASE_TAG" \
-              --title "Razer macOS $APP_VERSION" \
-              --notes-file "$notes_file" \
-              "${args[@]}"
+            if [[ "${#args[@]}" -gt 0 ]]; then
+              gh release edit "$RELEASE_TAG" \
+                --title "Razer macOS $APP_VERSION" \
+                --notes-file "$notes_file" \
+                "${args[@]}"
+            else
+              gh release edit "$RELEASE_TAG" \
+                --title "Razer macOS $APP_VERSION" \
+                --notes-file "$notes_file"
+            fi
           else
-            gh release create "$RELEASE_TAG" dist/release/* \
-              --target "$GITHUB_SHA" \
-              --title "Razer macOS $APP_VERSION" \
-              --notes-file "$notes_file" \
-              "${args[@]}"
+            if [[ "${#args[@]}" -gt 0 ]]; then
+              gh release create "$RELEASE_TAG" dist/release/* \
+                --target "$GITHUB_SHA" \
+                --title "Razer macOS $APP_VERSION" \
+                --notes-file "$notes_file" \
+                "${args[@]}"
+            else
+              gh release create "$RELEASE_TAG" dist/release/* \
+                --target "$GITHUB_SHA" \
+                --title "Razer macOS $APP_VERSION" \
+                --notes-file "$notes_file"
+            fi
           fi
