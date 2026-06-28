@@ -4,6 +4,7 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
   public let id: String
   public let name: String
   public let productId: String
+  public let kind: NativeDeviceKind
   public var connection: String
   public let capabilities: [DeviceCapability]
   public var bridgeStatus: String
@@ -16,6 +17,7 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
     id: String,
     name: String,
     productId: String,
+    kind: NativeDeviceKind = .unknown,
     connection: String,
     capabilities: [DeviceCapability],
     bridgeStatus: String,
@@ -27,6 +29,7 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
     self.id = id
     self.name = name
     self.productId = productId
+    self.kind = kind
     self.connection = connection
     self.capabilities = capabilities
     self.bridgeStatus = bridgeStatus
@@ -57,4 +60,17 @@ public struct NativeDevice: Identifiable, Equatable, Sendable {
 
     return connection
   }
+}
+
+public enum NativeDeviceKind: String, CaseIterable, Identifiable, Sendable {
+  case accessory
+  case egpu
+  case headphone
+  case keyboard
+  case mouse
+  case mouseDock = "mousedock"
+  case mouseMat = "mousemat"
+  case unknown
+
+  public var id: String { rawValue }
 }

@@ -42,9 +42,10 @@ final class NativeDeviceStore {
   }
 
   func refresh() {
+    let hardwareDevices = hardwareController.refreshDevices()
     let hardwareMice = hardwareController.refreshMice()
     devices = inventory.devices.map { device in
-      guard let hardwareMouse = hardwareMice.first(where: { $0.productId == device.productId }) else {
+      guard let hardwareDevice = hardwareDevices.first(where: { $0.productId == device.productId }) else {
         var previewDevice = device
         previewDevice.hardwareInternalId = nil
         previewDevice.setBridgeStatus(.controlsPreviewHardwareNotMatched)
@@ -52,24 +53,29 @@ final class NativeDeviceStore {
       }
 
       var connectedDevice = device
-      let readSucceeded = hardwareMouse.dpi > 0 || hardwareMouse.pollingRate > 0
-      connectedDevice.connection = "librazermacos internal #\(hardwareMouse.internalDeviceId)"
-      connectedDevice.hardwareInternalId = hardwareMouse.internalDeviceId
-      connectedDevice.setBridgeStatus(readSucceeded ? .connected : .detectedReadTimedOut)
-      connectedDevice.controlState.dpi = normalizedDPI(hardwareMouse.dpi, fallback: device.controlState.dpi)
-      connectedDevice.controlState.pollingRate = normalizedPollingRate(
-        hardwareMouse.pollingRate,
-        fallback: device.controlState.pollingRate
-      )
-      connectedDevice.controlState.batteryLevel = hardwareMouse.batteryLevel
-      connectedDevice.controlState.isCharging = hardwareMouse.isCharging
+      connectedDevice.connection = "librazermacos internal #\(hardwareDevice.internalDeviceId)"
+      connectedDevice.hardwareInternalId = hardwareDevice.internalDeviceId
+
+      if let hardwareMouse = hardwareMice.first(where: { $0.productId == device.productId }) {
+        let readSucceeded = hardwareMouse.dpi > 0 || hardwareMouse.pollingRate > 0
+        connectedDevice.setBridgeStatus(readSucceeded ? .connected : .detectedReadTimedOut)
+        connectedDevice.controlState.dpi = normalizedDPI(hardwareMouse.dpi, fallback: device.controlState.dpi)
+        connectedDevice.controlState.pollingRate = normalizedPollingRate(
+          hardwareMouse.pollingRate,
+          fallback: device.controlState.pollingRate
+        )
+        connectedDevice.controlState.batteryLevel = hardwareMouse.batteryLevel
+        connectedDevice.controlState.isCharging = hardwareMouse.isCharging
+      } else {
+        connectedDevice.setBridgeStatus(.connected)
+      }
       return connectedDevice
     }
     stages = inventory.stages
     selectedDeviceId = selectedDevice?.id ?? inventory.primaryDevice?.id
-    lastRefreshSummary = hardwareMice.isEmpty
+    lastRefreshSummary = hardwareDevices.isEmpty
       ? .targetLoadedNoLiveMouse(count: devices.count)
-      : .liveMouseLoaded(count: hardwareMice.count)
+      : .liveMouseLoaded(count: hardwareDevices.count)
   }
 
   func setDPI(_ dpi: Int) {
@@ -99,6 +105,70 @@ final class NativeDeviceStore {
       selected.setBridgeStatus(statusText(for: result))
     }
     lastRefreshSummary = summaryText(action: "\(pollingRate) Hz", result: result)
+  }
+
+  func setLightingMode(_ mode: LightingMode) {
+    guard let device = selectedDevice,
+          device.controlConfiguration.lightingModes.contains(mode)
+    else {
+      lastRefreshSummary = .lightingPreviewOnly
+      return
+    }
+
+    let result = hardwareController.setLightingMode(
+      mode,
+      color: device.controlState.staticColor,
+      kind: device.kind,
+      internalDeviceId: device.hardwareInternalId
+    )
+    updateSelectedDevice { selected in
+      selected.controlState.activeMode = mode
+      selected.setBridgeStatus(statusText(for: result))
+    }
+    lastRefreshSummary = summaryText(action: mode.rawValue, result: result)
+  }
+
+  func setStaticColor(_ color: RazerColor) {
+    guard let device = selectedDevice,
+          device.controlConfiguration.supportsStaticColor
+    else {
+      lastRefreshSummary = .lightingPreviewOnly
+      return
+    }
+
+    let result = hardwareController.setLightingMode(
+      .staticColor,
+      color: color,
+      kind: device.kind,
+      internalDeviceId: device.hardwareInternalId
+    )
+    updateSelectedDevice { selected in
+      selected.controlState.staticColor = color
+      selected.controlState.activeMode = .staticColor
+      selected.setBridgeStatus(statusText(for: result))
+    }
+    lastRefreshSummary = summaryText(action: "Static color", result: result)
+  }
+
+  func setBrightness(_ brightness: Int, zone: BrightnessZone) {
+    guard let device = selectedDevice,
+          device.controlConfiguration.brightnessZones.contains(zone)
+    else {
+      lastRefreshSummary = .lightingPreviewOnly
+      return
+    }
+
+    let result = hardwareController.setBrightness(
+      brightness,
+      zone: zone,
+      kind: device.kind,
+      internalDeviceId: device.hardwareInternalId
+    )
+    updateSelectedDevice { selected in
+      selected.controlState.brightness[zone] = brightness
+      selected.setBridgeStatus(statusText(for: result))
+    }
+    lastRefreshSummary = summaryText(action: "\(zone.rawValue) \(brightness)", result: result)
   }
 
   func shutdown() {

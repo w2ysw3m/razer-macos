@@ -6,11 +6,13 @@ extension AppText {
     目前原生介面：
     - 系統狀態列常駐
     - 登入時啟動
-    - 煉獄蝰蛇 V3 Pro 偵測
-    - 透過 librazermacos 控制 DPI 及回報率
+    - Swift 已載入舊版裝置清單
+    - 鍵盤、滑鼠、滑鼠墊、底座、eGPU、耳機及配件設定
+    - 原生預覽燈效、RGB 及亮度控制
+    - 對已匹配滑鼠透過 librazermacos 寫入 DPI 及回報率
     - 具保守逾時提示的硬件狀態
 
-    Legacy Electron 版本保留更廣的裝置清單及歷史燈效/狀態邏輯。原生 app 只會在控制項已接入並於 macOS 硬件上測試後，才將裝置標為原生就緒。
+    燈效寫入仍為預覽狀態；需要原生橋接提供並驗證對應裝置族的 librazermacos 端點後才會寫入硬件。
 
     基於 1kc/razer-macos、librazermacos 及 OpenRazer 裝置資料構建。
     """,
@@ -55,10 +57,20 @@ extension AppText {
     .launchAtLoginHelp: "登入時啟動透過 macOS ServiceManagement 註冊。如果本機未簽名構建顯示需要批准或不可用，請檢查系統設定 > 一般 > 登入項目。",
     .launchAtLoginStatus: "登入時啟動狀態",
     .lighting: "燈效",
+    .lightingApplyColor: "套用顏色",
+    .lightingApplyEffect: "套用效果",
+    .lightingBlue: "藍色",
+    .lightingBrightness: "亮度",
+    .lightingEffect: "效果",
+    .lightingGreen: "綠色",
+    .lightingPreviewOnly: "燈效變更僅為預覽；此裝置需要原生橋接提供燈效寫入後才能寫入硬件。",
+    .lightingRed: "紅色",
+    .lightingStaticColor: "靜態顏色",
     .lightingUnavailable: "此裝置設定未開放燈效控制。",
-    .liveMouseLoaded: "已載入即時 Razer 滑鼠：%d",
+    .legacyProfileLoaded: "已載入舊版裝置設定；硬件寫入取決於原生橋接支援。",
+    .liveMouseLoaded: "已載入即時 Razer 裝置：%d",
     .noDeviceSelected: "未選擇裝置",
-    .noRazerMouse: "沒有 Razer 滑鼠",
+    .noRazerMouse: "沒有 Razer 裝置",
     .openLoginItemsSettings: "開啟系統設定中的登入項目",
     .openRazerMacOS: "開啟 Razer macOS",
     .pollingRate: "回報率",
@@ -72,6 +84,7 @@ extension AppText {
     .refreshDevices: "重新整理裝置",
     .runtime: "執行環境",
     .savePollingRate: "儲存回報率",
+    .searchDevices: "搜尋裝置",
     .sentAction: "已傳送 %@ 到硬件",
     .setDPI: "設定 DPI",
     .settings: "設定",
@@ -85,6 +98,6 @@ extension AppText {
     .statusRequiresApproval: "需要批准",
     .statusUnavailable: "不可用",
     .statusUnknown: "未知",
-    .targetLoadedNoLiveMouse: "已載入目標裝置：%d；未匹配到即時 Razer 滑鼠"
+    .targetLoadedNoLiveMouse: "已載入目標裝置：%d；未匹配到即時 Razer 裝置"
   ]
 }

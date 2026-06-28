@@ -5,9 +5,17 @@ struct DeviceControlsView: View {
   let device: NativeDevice
   let onSetDPI: (Int) -> Void
   let onSetPollingRate: (Int) -> Void
+  let onSetLightingMode: (LightingMode) -> Void
+  let onSetStaticColor: (RazerColor) -> Void
+  let onSetBrightness: (Int, BrightnessZone) -> Void
 
   @State private var draftDPI: Double = 1_600
   @State private var draftPollingRate: Int = 1_000
+  @State private var draftLightingMode: LightingMode = .none
+  @State private var draftRed: Double = 0
+  @State private var draftGreen: Double = 255
+  @State private var draftBlue: Double = 0
+  @State private var draftBrightness: [BrightnessZone: Double] = [:]
   @Environment(\.appLanguage) private var language
 
   var body: some View {
@@ -25,7 +33,7 @@ struct DeviceControlsView: View {
           batteryStatus
         }
 
-        if device.controlConfiguration.supportsStaticColor {
+        if device.controlConfiguration.supportsLighting {
           lightingControls
         }
       }
@@ -121,9 +129,103 @@ struct DeviceControlsView: View {
       Label(AppText.string(.lighting, language: language), systemImage: "lightbulb")
         .font(.headline)
 
-      Text(AppText.string(.lightingUnavailable, language: language))
+      if !device.controlConfiguration.lightingModes.isEmpty {
+        Picker(AppText.string(.lightingEffect, language: language), selection: $draftLightingMode) {
+          ForEach(device.controlConfiguration.lightingModes) { mode in
+            Text(AppText.lightingModeName(mode, language: language)).tag(mode)
+          }
+        }
+        .pickerStyle(.menu)
+
+        Button {
+          onSetLightingMode(draftLightingMode)
+        } label: {
+          Label(AppText.string(.lightingApplyEffect, language: language), systemImage: "sparkles")
+        }
+      }
+
+      if device.controlConfiguration.supportsStaticColor {
+        staticColorControls
+      }
+
+      if !device.controlConfiguration.brightnessZones.isEmpty {
+        brightnessControls
+      }
+
+      Text(AppText.string(.lightingPreviewOnly, language: language))
+        .font(.caption)
         .foregroundStyle(.secondary)
     }
+  }
+
+  private var staticColorControls: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      Label(AppText.string(.lightingStaticColor, language: language), systemImage: "paintpalette")
+        .font(.subheadline)
+
+      colorSlider(.lightingRed, value: $draftRed)
+      colorSlider(.lightingGreen, value: $draftGreen)
+      colorSlider(.lightingBlue, value: $draftBlue)
+
+      Button {
+        onSetStaticColor(
+          RazerColor(
+            red: Int(draftRed),
+            green: Int(draftGreen),
+            blue: Int(draftBlue)
+          )
+        )
+      } label: {
+        Label(AppText.string(.lightingApplyColor, language: language), systemImage: "checkmark.circle")
+      }
+    }
+  }
+
+  private var brightnessControls: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      Label(AppText.string(.lightingBrightness, language: language), systemImage: "sun.max")
+        .font(.subheadline)
+
+      ForEach(device.controlConfiguration.brightnessZones) { zone in
+        HStack {
+          Text(AppText.brightnessZoneName(zone, language: language))
+            .frame(width: 92, alignment: .leading)
+          Slider(value: brightnessBinding(for: zone), in: 0...100, step: 1)
+          Text("\(Int(draftBrightness[zone] ?? 100))")
+            .monospacedDigit()
+            .frame(width: 34, alignment: .trailing)
+          Button {
+            onSetBrightness(Int(draftBrightness[zone] ?? 100), zone)
+          } label: {
+            Image(systemName: "checkmark.circle")
+          }
+          .buttonStyle(.borderless)
+          .help(AppText.string(.lightingBrightness, language: language))
+        }
+      }
+    }
+  }
+
+  private func colorSlider(_ key: AppStringKey, value: Binding<Double>) -> some View {
+    HStack {
+      Text(AppText.string(key, language: language))
+        .frame(width: 64, alignment: .leading)
+      Slider(value: value, in: 0...255, step: 1)
+      Text("\(Int(value.wrappedValue))")
+        .monospacedDigit()
+        .frame(width: 38, alignment: .trailing)
+    }
+  }
+
+  private func brightnessBinding(for zone: BrightnessZone) -> Binding<Double> {
+    Binding(
+      get: {
+        draftBrightness[zone] ?? Double(device.controlState.brightness[zone] ?? 100)
+      },
+      set: { newValue in
+        draftBrightness[zone] = newValue
+      }
+    )
   }
 
   private func syncDrafts() {
@@ -137,5 +239,20 @@ struct DeviceControlsView: View {
     } else if let firstRate = device.controlConfiguration.pollingRates.first {
       draftPollingRate = firstRate
     }
+
+    if device.controlConfiguration.lightingModes.contains(device.controlState.activeMode) {
+      draftLightingMode = device.controlState.activeMode
+    } else if let firstMode = device.controlConfiguration.lightingModes.first {
+      draftLightingMode = firstMode
+    }
+
+    draftRed = Double(device.controlState.staticColor.red)
+    draftGreen = Double(device.controlState.staticColor.green)
+    draftBlue = Double(device.controlState.staticColor.blue)
+    draftBrightness = Dictionary(
+      uniqueKeysWithValues: device.controlConfiguration.brightnessZones.map { zone in
+        (zone, Double(device.controlState.brightness[zone] ?? 100))
+      }
+    )
   }
 }

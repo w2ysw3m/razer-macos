@@ -30,6 +30,10 @@ let package = Package(
     .testTarget(
       name: "NativeRazerCoreTests",
       dependencies: ["NativeRazerCore"]
+    ),
+    .testTarget(
+      name: "NativeRazerMacOSTests",
+      dependencies: ["NativeRazerCore", "NativeRazerMacOS"]
     )
   ]
 )

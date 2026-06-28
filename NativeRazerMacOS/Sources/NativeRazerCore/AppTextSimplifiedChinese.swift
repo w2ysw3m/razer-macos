@@ -6,11 +6,13 @@ extension AppText {
     当前原生界面：
     - 系统状态栏常驻
     - 登录时启动
-    - 炼狱蝰蛇 V3 Pro 发现
-    - 通过 librazermacos 控制 DPI 和回报率
+    - Swift 已加载旧版设备目录
+    - 键盘、鼠标、鼠标垫、底座、eGPU、耳机和配件配置
+    - 原生预览灯效、RGB 和亮度控制
+    - 对已匹配鼠标通过 librazermacos 写入 DPI 和回报率
     - 带保守超时提示的硬件状态
 
-    Legacy Electron 版本保留更广的设备目录和历史灯效/状态逻辑。原生 app 只会在控件已经接入并在 macOS 硬件上测试后，才把设备标为原生就绪。
+    灯效写入仍为预览状态；需要原生桥接暴露并验证对应设备族的 librazermacos 端点后才会写入硬件。
 
     基于 1kc/razer-macos、librazermacos 和 OpenRazer 设备资料构建。
     """,
@@ -55,10 +57,20 @@ extension AppText {
     .launchAtLoginHelp: "登录时启动通过 macOS ServiceManagement 注册。如果本地未签名构建显示需要批准或不可用，请检查系统设置 > 通用 > 登录项。",
     .launchAtLoginStatus: "登录时启动状态",
     .lighting: "灯效",
+    .lightingApplyColor: "应用颜色",
+    .lightingApplyEffect: "应用效果",
+    .lightingBlue: "蓝色",
+    .lightingBrightness: "亮度",
+    .lightingEffect: "效果",
+    .lightingGreen: "绿色",
+    .lightingPreviewOnly: "灯效变更仅为预览；此设备需要原生桥接暴露灯效写入后才能写入硬件。",
+    .lightingRed: "红色",
+    .lightingStaticColor: "静态颜色",
     .lightingUnavailable: "此设备配置未暴露灯效控制。",
-    .liveMouseLoaded: "已加载实时 Razer 鼠标：%d",
+    .legacyProfileLoaded: "已加载旧版设备配置；硬件写入取决于原生桥接支持。",
+    .liveMouseLoaded: "已加载实时 Razer 设备：%d",
     .noDeviceSelected: "未选择设备",
-    .noRazerMouse: "没有 Razer 鼠标",
+    .noRazerMouse: "没有 Razer 设备",
     .openLoginItemsSettings: "打开系统设置中的登录项",
     .openRazerMacOS: "打开 Razer macOS",
     .pollingRate: "回报率",
@@ -72,6 +84,7 @@ extension AppText {
     .refreshDevices: "刷新设备",
     .runtime: "运行时",
     .savePollingRate: "保存回报率",
+    .searchDevices: "搜索设备",
     .sentAction: "已发送 %@ 到硬件",
     .setDPI: "设置 DPI",
     .settings: "设置",
@@ -85,6 +98,6 @@ extension AppText {
     .statusRequiresApproval: "需要批准",
     .statusUnavailable: "不可用",
     .statusUnknown: "未知",
-    .targetLoadedNoLiveMouse: "已加载目标设备：%d；未匹配到实时 Razer 鼠标"
+    .targetLoadedNoLiveMouse: "已加载目标设备：%d；未匹配到实时 Razer 设备"
   ]
 }

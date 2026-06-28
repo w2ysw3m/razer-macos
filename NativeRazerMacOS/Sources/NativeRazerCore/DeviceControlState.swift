@@ -47,6 +47,13 @@ public enum LightingMode: String, CaseIterable, Identifiable, Sendable {
   case none = "None"
   case staticColor = "Static"
   case spectrum = "Spectrum"
+  case breathe = "Breathe"
+  case reactive = "Reactive"
+  case starlight = "Starlight"
+  case wave = "Wave"
+  case ripple = "Ripple"
+  case wheel = "Wheel"
+  case oldMouseEffects = "Old mouse effects"
 
   public var id: String { rawValue }
 }

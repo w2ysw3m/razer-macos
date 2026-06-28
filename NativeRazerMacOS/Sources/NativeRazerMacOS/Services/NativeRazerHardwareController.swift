@@ -11,6 +11,12 @@ struct HardwareMouseSnapshot: Equatable {
   let isCharging: Bool?
 }
 
+struct HardwareDeviceSnapshot: Equatable {
+  let internalDeviceId: Int
+  let productId: String
+  let kind: NativeDeviceKind
+}
+
 enum HardwareApplyResult: Equatable {
   case applied
   case previewOnly(AppMessage)
@@ -18,13 +24,36 @@ enum HardwareApplyResult: Equatable {
 }
 
 protocol NativeRazerHardwareControlling {
+  func refreshDevices() -> [HardwareDeviceSnapshot]
   func refreshMice() -> [HardwareMouseSnapshot]
   func setDPI(_ dpi: Int, internalDeviceId: Int?) -> HardwareApplyResult
   func setPollingRate(_ pollingRate: Int, internalDeviceId: Int?) -> HardwareApplyResult
+  func setLightingMode(_ mode: LightingMode, color: RazerColor, kind: NativeDeviceKind, internalDeviceId: Int?) -> HardwareApplyResult
+  func setBrightness(_ brightness: Int, zone: BrightnessZone, kind: NativeDeviceKind, internalDeviceId: Int?) -> HardwareApplyResult
   func shutdown()
 }
 
 final class NativeRazerHardwareController: NativeRazerHardwareControlling {
+  func refreshDevices() -> [HardwareDeviceSnapshot] {
+    var snapshots = Array(
+      repeating: NativeRazerDeviceSnapshot(),
+      count: 32
+    )
+    let count = NativeRazerRefreshDevices(&snapshots, Int32(snapshots.count))
+
+    guard count > 0 else {
+      return []
+    }
+
+    return snapshots.prefix(Int(count)).map { snapshot in
+      HardwareDeviceSnapshot(
+        internalDeviceId: Int(snapshot.internalDeviceId),
+        productId: productIdString(snapshot.productId),
+        kind: deviceKind(Int(snapshot.deviceKind))
+      )
+    }
+  }
+
   func refreshMice() -> [HardwareMouseSnapshot] {
     var snapshots = Array(
       repeating: NativeRazerMouseSnapshot(),
@@ -66,6 +95,14 @@ final class NativeRazerHardwareController: NativeRazerHardwareControlling {
     return result == 0 ? .applied : .failed(.hardwareRejectedPollingRate)
   }
 
+  func setLightingMode(_ mode: LightingMode, color: RazerColor, kind: NativeDeviceKind, internalDeviceId: Int?) -> HardwareApplyResult {
+    .previewOnly(.lightingPreviewOnly)
+  }
+
+  func setBrightness(_ brightness: Int, zone: BrightnessZone, kind: NativeDeviceKind, internalDeviceId: Int?) -> HardwareApplyResult {
+    .previewOnly(.lightingPreviewOnly)
+  }
+
   func shutdown() {
     NativeRazerShutdown()
   }
@@ -73,4 +110,26 @@ final class NativeRazerHardwareController: NativeRazerHardwareControlling {
   private func productIdString(_ productId: UInt16) -> String {
     "0x" + String(format: "%04X", productId)
   }
+
+  private func deviceKind(_ rawValue: Int) -> NativeDeviceKind {
+    switch rawValue {
+    case 0:
+      .accessory
+    case 1:
+      .egpu
+    case 2:
+      .headphone
+    case 3:
+      .keyboard
+    case 4:
+      .mouse
+    case 5:
+      .mouseDock
+    case 6:
+      .mouseMat
+    default:
+      .unknown
+    }
+  }
+
 }

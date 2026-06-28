@@ -9,6 +9,8 @@ public enum AppMessage: Equatable, Sendable {
   case hardwareRejectedPollingRate
   case launchAtLoginDisabled
   case launchAtLoginEnabled
+  case legacyProfileLoaded
+  case lightingPreviewOnly
   case liveMouseLoaded(count: Int)
   case passthrough(String)
   case previewed(action: String)
@@ -39,6 +41,10 @@ public enum AppMessage: Equatable, Sendable {
       AppText.string(.launchAtLoginDisabledMessage, language: language)
     case .launchAtLoginEnabled:
       AppText.string(.launchAtLoginEnabledMessage, language: language)
+    case .legacyProfileLoaded:
+      AppText.string(.legacyProfileLoaded, language: language)
+    case .lightingPreviewOnly:
+      AppText.string(.lightingPreviewOnly, language: language)
     case .liveMouseLoaded(let count):
       AppText.formatted(.liveMouseLoaded, language: language, count)
     case .passthrough(let message):

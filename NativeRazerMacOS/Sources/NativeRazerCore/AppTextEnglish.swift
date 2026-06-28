@@ -6,11 +6,13 @@ extension AppText {
     Current native surface:
     - Menu-bar resident app
     - Launch at Login
-    - DeathAdder V3 Pro discovery
-    - DPI and polling-rate controls through librazermacos
+    - Legacy device catalog loaded in Swift
+    - Keyboard, mouse, mouse mat, dock, eGPU, headphone, and accessory profiles
+    - Lighting-effect, RGB, and brightness controls in native preview
+    - DPI and polling-rate writes through librazermacos for matched mice
     - Hardware status with conservative timeout reporting
 
-    Legacy Electron support keeps the broader device catalog and historical color/state logic. The native app marks a device native-ready only after its controls are wired and tested on macOS hardware.
+    Lighting writes remain preview-only until the native bridge exposes and verifies the matching librazermacos endpoints for each device family.
 
     Built on 1kc/razer-macos, librazermacos, and OpenRazer device work.
     """,
@@ -55,10 +57,20 @@ extension AppText {
     .launchAtLoginHelp: "Launch at Login is registered with macOS ServiceManagement. If the local unsigned build shows Requires approval or Unavailable, check System Settings > General > Login Items.",
     .launchAtLoginStatus: "Launch at Login status",
     .lighting: "Lighting",
+    .lightingApplyColor: "Apply Color",
+    .lightingApplyEffect: "Apply Effect",
+    .lightingBlue: "Blue",
+    .lightingBrightness: "Brightness",
+    .lightingEffect: "Effect",
+    .lightingGreen: "Green",
+    .lightingPreviewOnly: "Lighting changes are preview-only until the native bridge exposes lighting writes for this device.",
+    .lightingRed: "Red",
+    .lightingStaticColor: "Static color",
     .lightingUnavailable: "This device profile does not expose lighting controls.",
-    .liveMouseLoaded: "Live Razer mice loaded: %d",
+    .legacyProfileLoaded: "Legacy device profile loaded; hardware writes depend on native bridge support.",
+    .liveMouseLoaded: "Live Razer devices loaded: %d",
     .noDeviceSelected: "No device selected",
-    .noRazerMouse: "No Razer mouse",
+    .noRazerMouse: "No Razer device",
     .openLoginItemsSettings: "Open Login Items in System Settings",
     .openRazerMacOS: "Open Razer macOS",
     .pollingRate: "Polling rate",
@@ -72,6 +84,7 @@ extension AppText {
     .refreshDevices: "Refresh Devices",
     .runtime: "Runtime",
     .savePollingRate: "Save Polling Rate",
+    .searchDevices: "Search devices",
     .sentAction: "Sent %@ to hardware",
     .setDPI: "Set DPI",
     .settings: "Settings",
@@ -85,6 +98,6 @@ extension AppText {
     .statusRequiresApproval: "Requires approval",
     .statusUnavailable: "Unavailable",
     .statusUnknown: "Unknown",
-    .targetLoadedNoLiveMouse: "Target devices loaded: %d; no live Razer mouse matched"
+    .targetLoadedNoLiveMouse: "Target devices loaded: %d; no live Razer device matched"
   ]
 }

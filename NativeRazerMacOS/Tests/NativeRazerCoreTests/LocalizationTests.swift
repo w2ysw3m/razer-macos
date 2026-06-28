@@ -22,6 +22,15 @@ struct LocalizationTests {
     #expect(DeviceCapability.pollingRate.localizedName(language: .traditionalChinese) == "回報率")
   }
 
+  @Test func lightingControls_whenLocalized_useSelectedLanguage() {
+    #expect(AppText.lightingModeName(.wave, language: .english) == "Wave")
+    #expect(AppText.lightingModeName(.wave, language: .simplifiedChinese) == "波浪")
+    #expect(AppText.lightingModeName(.wave, language: .traditionalChinese) == "波浪")
+    #expect(AppText.brightnessZoneName(.scroll, language: .english) == "Scroll wheel")
+    #expect(AppText.brightnessZoneName(.scroll, language: .simplifiedChinese) == "滚轮")
+    #expect(AppText.brightnessZoneName(.scroll, language: .traditionalChinese) == "滾輪")
+  }
+
   @Test func nativeDeviceConnection_whenKnownValueIsLocalized_usesSelectedLanguage() {
     let device = NativeDevice(
       id: "deathadder-v3-pro",

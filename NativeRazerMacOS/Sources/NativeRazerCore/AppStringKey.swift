@@ -41,7 +41,17 @@ public enum AppStringKey: String, CaseIterable, Sendable {
   case launchAtLoginHelp
   case launchAtLoginStatus
   case lighting
+  case lightingApplyColor
+  case lightingApplyEffect
+  case lightingBlue
+  case lightingBrightness
+  case lightingEffect
+  case lightingGreen
+  case lightingPreviewOnly
+  case lightingRed
+  case lightingStaticColor
   case lightingUnavailable
+  case legacyProfileLoaded
   case liveMouseLoaded
   case noDeviceSelected
   case noRazerMouse
@@ -58,6 +68,7 @@ public enum AppStringKey: String, CaseIterable, Sendable {
   case refreshDevices
   case runtime
   case savePollingRate
+  case searchDevices
   case sentAction
   case setDPI
   case settings

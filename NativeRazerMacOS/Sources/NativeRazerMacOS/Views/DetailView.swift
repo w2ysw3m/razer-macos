@@ -14,7 +14,10 @@ struct DetailView: View {
           DeviceControlsView(
             device: device,
             onSetDPI: store.setDPI,
-            onSetPollingRate: store.setPollingRate
+            onSetPollingRate: store.setPollingRate,
+            onSetLightingMode: store.setLightingMode,
+            onSetStaticColor: store.setStaticColor,
+            onSetBrightness: store.setBrightness
           )
         }
       }

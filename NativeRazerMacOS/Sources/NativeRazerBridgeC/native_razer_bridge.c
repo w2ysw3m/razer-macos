@@ -7,6 +7,23 @@
 #include "razermouse_driver.h"
 
 extern bool is_mouse(IOUSBDeviceInterface **usb_dev);
+extern bool is_keyboard(IOUSBDeviceInterface **usb_dev);
+extern bool is_mouse_dock(IOUSBDeviceInterface **usb_dev);
+extern bool is_mouse_mat(IOUSBDeviceInterface **usb_dev);
+extern bool is_egpu(IOUSBDeviceInterface **usb_dev);
+extern bool is_headphone(IOUSBDeviceInterface **usb_dev);
+extern bool is_accessory(IOUSBDeviceInterface **usb_dev);
+
+enum {
+  NATIVE_RAZER_KIND_ACCESSORY = 0,
+  NATIVE_RAZER_KIND_EGPU = 1,
+  NATIVE_RAZER_KIND_HEADPHONE = 2,
+  NATIVE_RAZER_KIND_KEYBOARD = 3,
+  NATIVE_RAZER_KIND_MOUSE = 4,
+  NATIVE_RAZER_KIND_MOUSE_DOCK = 5,
+  NATIVE_RAZER_KIND_MOUSE_MAT = 6,
+  NATIVE_RAZER_KIND_UNKNOWN = 7
+};
 
 static RazerDevices cached_devices = {0};
 static bool has_cached_devices = false;
@@ -35,7 +52,32 @@ static RazerDevice *find_cached_device(int internalDeviceId) {
   return NULL;
 }
 
-int NativeRazerRefreshMice(NativeRazerMouseSnapshot *snapshots, int maxSnapshots) {
+static int device_kind_for(IOUSBDeviceInterface **usbDevice) {
+  if (is_mouse(usbDevice)) {
+    return NATIVE_RAZER_KIND_MOUSE;
+  }
+  if (is_keyboard(usbDevice)) {
+    return NATIVE_RAZER_KIND_KEYBOARD;
+  }
+  if (is_mouse_dock(usbDevice)) {
+    return NATIVE_RAZER_KIND_MOUSE_DOCK;
+  }
+  if (is_mouse_mat(usbDevice)) {
+    return NATIVE_RAZER_KIND_MOUSE_MAT;
+  }
+  if (is_egpu(usbDevice)) {
+    return NATIVE_RAZER_KIND_EGPU;
+  }
+  if (is_headphone(usbDevice)) {
+    return NATIVE_RAZER_KIND_HEADPHONE;
+  }
+  if (is_accessory(usbDevice)) {
+    return NATIVE_RAZER_KIND_ACCESSORY;
+  }
+  return NATIVE_RAZER_KIND_UNKNOWN;
+}
+
+int NativeRazerRefreshDevices(NativeRazerDeviceSnapshot *snapshots, int maxSnapshots) {
   if (snapshots == NULL || maxSnapshots <= 0) {
     return 0;
   }
@@ -43,6 +85,34 @@ int NativeRazerRefreshMice(NativeRazerMouseSnapshot *snapshots, int maxSnapshots
   close_cached_devices();
   cached_devices = getAllRazerDevices();
   has_cached_devices = true;
+
+  int count = 0;
+  for (int index = 0; index < cached_devices.size && count < maxSnapshots; ++index) {
+    RazerDevice *device = &cached_devices.devices[index];
+    if (device->usbDevice == NULL) {
+      continue;
+    }
+
+    NativeRazerDeviceSnapshot snapshot = {0};
+    snapshot.internalDeviceId = device->internalDeviceId;
+    snapshot.productId = device->productId;
+    snapshot.deviceKind = device_kind_for(device->usbDevice);
+    snapshots[count] = snapshot;
+    count += 1;
+  }
+
+  return count;
+}
+
+int NativeRazerRefreshMice(NativeRazerMouseSnapshot *snapshots, int maxSnapshots) {
+  if (snapshots == NULL || maxSnapshots <= 0) {
+    return 0;
+  }
+
+  if (!has_cached_devices) {
+    cached_devices = getAllRazerDevices();
+    has_cached_devices = true;
+  }
 
   int count = 0;
   for (int index = 0; index < cached_devices.size && count < maxSnapshots; ++index) {

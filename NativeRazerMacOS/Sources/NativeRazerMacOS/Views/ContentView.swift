@@ -3,6 +3,7 @@ import SwiftUI
 
 struct ContentView: View {
   @Bindable var store: NativeDeviceStore
+  @State private var searchText = ""
   @AppStorage(AppLanguage.storageKey) private var languageRawValue = AppLanguage.english.rawValue
 
   private var language: AppLanguage {
@@ -13,7 +14,8 @@ struct ContentView: View {
     NavigationSplitView {
       SidebarView(
         devices: store.devices,
-        selection: $store.selectedDeviceId
+        selection: $store.selectedDeviceId,
+        searchText: $searchText
       )
     } detail: {
       DetailView(store: store)

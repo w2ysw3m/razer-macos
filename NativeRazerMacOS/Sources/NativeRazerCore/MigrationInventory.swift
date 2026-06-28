@@ -23,11 +23,14 @@ public struct MigrationInventory: Sendable {
     Set(devices.flatMap(\.capabilities)).count
   }
 
-  public static let defaultDevices = [
+  public static let defaultDevices = LegacyDeviceCatalog.devices
+
+  public static let targetDeviceFallback = [
     NativeDevice(
       id: "deathadder-v3-pro",
       name: "Razer DeathAdder V3 Pro",
       productId: "0x00B7",
+      kind: .mouse,
       connection: "USB receiver / wired",
       capabilities: [.discovery, .dpi, .pollingRate, .battery],
       bridgeStatus: "Ready for librazermacos bridge.",
