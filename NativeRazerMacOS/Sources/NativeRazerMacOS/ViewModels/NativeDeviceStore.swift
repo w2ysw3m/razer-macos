@@ -33,6 +33,12 @@ final class NativeDeviceStore {
     }
   }
 
+  var statusBarDevices: [NativeDevice] {
+    devices.filter { device in
+      device.hardwareInternalId != nil
+    }
+  }
+
   var bridgeSourcePath: String {
     inventory.bridgeSourcePath
   }

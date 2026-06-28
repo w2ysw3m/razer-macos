@@ -23,25 +23,27 @@ struct MenuBarStatusView: View {
 
     Divider()
 
-    if let device = store.selectedDevice {
-      Button(device.name) {
-        openMainWindow()
-      }
-      .disabled(true)
-
-      if let dpi = device.controlState.dpi {
-        Text(AppText.formatted(.dpiMenu, language: language, dpi))
-      }
-
-      if let pollingRate = device.controlState.pollingRate {
-        Text(AppText.formatted(.rateMenu, language: language, pollingRate))
-      }
-
-      if let batteryLevel = device.controlState.batteryLevel {
-        Text(AppText.formatted(.batteryMenu, language: language, batteryLevel))
-      }
-    } else {
+    if store.statusBarDevices.isEmpty {
       Text(AppText.string(.noRazerMouse, language: language))
+    } else {
+      ForEach(store.statusBarDevices) { device in
+        Button(device.name) {
+          openMainWindow()
+        }
+        .disabled(true)
+
+        if let dpi = device.controlState.dpi {
+          Text(AppText.formatted(.dpiMenu, language: language, dpi))
+        }
+
+        if let pollingRate = device.controlState.pollingRate {
+          Text(AppText.formatted(.rateMenu, language: language, pollingRate))
+        }
+
+        if let batteryLevel = device.controlState.batteryLevel {
+          Text(AppText.formatted(.batteryMenu, language: language, batteryLevel))
+        }
+      }
     }
 
     Divider()

@@ -131,6 +131,27 @@ struct NativeDeviceStoreHardwareTests {
     #expect(sections.connectedDevices.isEmpty)
     #expect(sections.supportedDevices.map(\.id) == ["supported-keyboard"])
   }
+
+  @Test func statusBarDevices_whenDisconnectedDeviceIsSelected_returnsOnlyConnectedHardware() throws {
+    let hardware = FakeHardwareController(
+      devices: [
+        HardwareDeviceSnapshot(
+          internalDeviceId: 7,
+          productId: "0x00B7",
+          kind: .mouse
+        )
+      ]
+    )
+    let store = NativeDeviceStore(hardwareController: hardware)
+    let disconnectedDevice = try #require(store.devices.first { device in
+      device.productId == "0x0204"
+    })
+
+    store.selectedDeviceId = disconnectedDevice.id
+
+    #expect(store.selectedDevice?.productId == "0x0204")
+    #expect(store.statusBarDevices.map(\.productId) == ["0x00B7"])
+  }
 }
 
 private final class FakeHardwareController: NativeRazerHardwareControlling {
