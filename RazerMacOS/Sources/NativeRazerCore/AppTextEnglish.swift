@@ -18,7 +18,7 @@ extension AppText {
     """,
     .aboutRazerMacOS: "About Razer macOS",
     .appBuildDescription: "SwiftUI/AppKit + librazermacos bridge",
-    .appTitle: "Razer macOS Native",
+    .appTitle: "Razer macOS",
     .battery: "Battery",
     .batteryMenu: "Battery: %d%%",
     .batteryStatusUnavailable: "Battery status unavailable from the current bridge read.",

@@ -8,7 +8,7 @@ Razer macOS 是一个开源的 macOS Razer 外设控制 app。这个 fork 正在
 
 ## 当前状态
 
-- `NativeRazerMacOS` 中已有原生 SwiftUI/AppKit app shell
+- `RazerMacOS` 中已有原生 SwiftUI/AppKit app shell
 - macOS 菜单栏常驻状态项
 - 原生 Settings 窗口，支持通过 `ServiceManagement` 注册 Launch at Login，并提供 macOS Login Items 快捷入口
 - 原生界面支持英文、简体中文、繁体中文语言选择
@@ -89,7 +89,7 @@ count=1
 运行 Swift 测试：
 
 ```sh
-swift test --package-path NativeRazerMacOS
+swift test --package-path RazerMacOS
 ```
 
 原生 app 在主窗口关闭后仍会保持运行。可从菜单栏项目、Dock 或 Razer command menu 重新打开。Launch at Login 与语言选择可在原生 Settings 窗口中设置。
@@ -99,30 +99,32 @@ swift test --package-path NativeRazerMacOS
 创建本地原生 release artifacts：
 
 ```sh
-APP_VERSION=0.4.14 MACOS_SIGNING_MODE=auto ./script/package_native.sh
+APP_VERSION=0.4.15 MACOS_SIGNING_MODE=auto ./script/package_native.sh
 ```
 
 如果要生成 Developer ID 签名的本地包，请先确认登录钥匙串里已经安装 `Developer ID Application` 身份，然后运行：
 
 ```sh
-APP_VERSION=0.4.14 MACOS_SIGNING_MODE=required ./script/package_native.sh
+APP_VERSION=0.4.15 MACOS_SIGNING_MODE=required ./script/package_native.sh
 ```
 
 脚本会写出：
 
-- `dist/release/NativeRazerMacOS-<version>-macOS.zip`
-- `dist/release/NativeRazerMacOS-<version>-macOS.dmg`
+- `dist/release/RazerMacOS-<version>-macOS.zip`
+- `dist/release/RazerMacOS-<version>-macOS.dmg`
 - `dist/release/SHA256SUMS.txt`
 
 默认 release 打包会构建 `arm64` + `x86_64` universal binary。只有制作本地诊断包时才建议覆盖 `NATIVE_MACOS_ARCHS`。
 
+`.dmg` 内会包含 `Razer macOS.app`、`Applications` 快捷方式，以及提示用户把 app 拖到 Applications 的 Finder 背景图。
+
 Ad-hoc 包只适合本地测试：
 
 ```sh
-APP_VERSION=0.4.14 MACOS_SIGNING_MODE=adhoc ./script/package_native.sh
+APP_VERSION=0.4.15 MACOS_SIGNING_MODE=adhoc ./script/package_native.sh
 ```
 
-公开下载版本应使用 Developer ID 签名并完成 Apple 公证。推送 `v*` tag，或手动运行 `Native macOS Release` workflow 时，`.github/workflows/native-release.yml` 会构建 GitHub Release。
+公开下载版本应使用 Developer ID 签名并完成 Apple 公证。推送 `v*` tag，或手动运行 `Razer macOS Release` workflow 时，`.github/workflows/native-release.yml` 会构建 GitHub Release。
 
 需要配置的仓库 secrets：
 
@@ -138,11 +140,11 @@ APP_VERSION=0.4.14 MACOS_SIGNING_MODE=adhoc ./script/package_native.sh
 secrets 配好后，可用命令行发布：
 
 ```sh
-git tag v0.4.14
-git push fork v0.4.14
+git tag v0.4.15
+git push fork v0.4.15
 ```
 
-也可以在 GitHub Actions 里用 workflow dispatch，输入 `version=0.4.14`。workflow 会运行 Swift 测试、签名原生 app 与 disk image、提交 Apple 公证、staple app 与 disk image、上传构建 artifacts，并发布 GitHub Release assets。
+也可以在 GitHub Actions 里用 workflow dispatch，输入 `version=0.4.15`。workflow 会运行 Swift 测试、签名原生 app 与 disk image、提交 Apple 公证、staple app 与 disk image、上传构建 artifacts，并发布 GitHub Release assets。
 
 ## Legacy Electron app
 
@@ -182,8 +184,8 @@ yarn dist
 
 此仓库当前有两层 app，共用同一套驱动 lineage：
 
-- `NativeRazerMacOS/` 包含新的 SwiftUI/AppKit macOS app。
-- `NativeRazerMacOS/Sources/NativeRazerBridgeC/` 将 C 驱动函数暴露给 Swift。
+- `RazerMacOS/` 包含新的 SwiftUI/AppKit macOS app。
+- `RazerMacOS/Sources/NativeRazerBridgeC/` 将 C 驱动函数暴露给 Swift。
 - `librazermacos/` 包含低层 Razer USB/HID protocol 实现。
 - `src/` 包含 legacy Electron UI、state manager、菜单栏 app 与 Node addon integration。
 - `src/devices/` 包含由 OpenRazer 与原 razer-macos 工作导入并维护的设备 profile。

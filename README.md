@@ -8,7 +8,7 @@ The current development focus is practical macOS support for newer Razer devices
 
 ## Current Status
 
-- Native SwiftUI/AppKit app shell in `NativeRazerMacOS`
+- Native SwiftUI/AppKit app shell in `RazerMacOS`
 - macOS menu-bar resident app with a persistent status item
 - Native settings window with Launch at Login support through `ServiceManagement` and a System Settings Login Items shortcut
 - Native UI language selection for English, Simplified Chinese, and Traditional Chinese
@@ -89,7 +89,7 @@ Scan connected Razer mice through the native C bridge:
 Run Swift tests:
 
 ```sh
-swift test --package-path NativeRazerMacOS
+swift test --package-path RazerMacOS
 ```
 
 The native app keeps running after its main window is closed. Reopen it from the menu-bar item, Dock, or the Razer command menu. Launch at Login and language selection are available from the native Settings window.
@@ -99,30 +99,32 @@ The native app keeps running after its main window is closed. Reopen it from the
 Create local native release artifacts:
 
 ```sh
-APP_VERSION=0.4.14 MACOS_SIGNING_MODE=auto ./script/package_native.sh
+APP_VERSION=0.4.15 MACOS_SIGNING_MODE=auto ./script/package_native.sh
 ```
 
 For a Developer ID signed local package, make sure a `Developer ID Application` identity is installed in the login keychain, then run:
 
 ```sh
-APP_VERSION=0.4.14 MACOS_SIGNING_MODE=required ./script/package_native.sh
+APP_VERSION=0.4.15 MACOS_SIGNING_MODE=required ./script/package_native.sh
 ```
 
 The script writes:
 
-- `dist/release/NativeRazerMacOS-<version>-macOS.zip`
-- `dist/release/NativeRazerMacOS-<version>-macOS.dmg`
+- `dist/release/RazerMacOS-<version>-macOS.zip`
+- `dist/release/RazerMacOS-<version>-macOS.dmg`
 - `dist/release/SHA256SUMS.txt`
 
 By default, release packaging builds a universal `arm64` + `x86_64` binary. Override `NATIVE_MACOS_ARCHS` only when producing a local diagnostic build.
 
+The `.dmg` contains `Razer macOS.app`, an `Applications` shortcut, and a Finder background that guides users to drag the app into Applications.
+
 Ad-hoc packages are useful for local testing only:
 
 ```sh
-APP_VERSION=0.4.14 MACOS_SIGNING_MODE=adhoc ./script/package_native.sh
+APP_VERSION=0.4.15 MACOS_SIGNING_MODE=adhoc ./script/package_native.sh
 ```
 
-Public downloads should be Developer ID signed and notarized. GitHub Releases are built by `.github/workflows/native-release.yml` when a `v*` tag is pushed or when the `Native macOS Release` workflow is run manually.
+Public downloads should be Developer ID signed and notarized. GitHub Releases are built by `.github/workflows/native-release.yml` when a `v*` tag is pushed or when the `Razer macOS Release` workflow is run manually.
 
 Required repository secrets:
 
@@ -138,11 +140,11 @@ Required repository secrets:
 Run a release from the command line after the secrets are configured:
 
 ```sh
-git tag v0.4.14
-git push fork v0.4.14
+git tag v0.4.15
+git push fork v0.4.15
 ```
 
-Or use GitHub Actions workflow dispatch with `version=0.4.14`. The workflow runs Swift tests, signs the native app and disk image, submits notarization, staples the app and disk image, uploads build artifacts, and publishes the GitHub Release assets.
+Or use GitHub Actions workflow dispatch with `version=0.4.15`. The workflow runs Swift tests, signs the native app and disk image, submits notarization, staples the app and disk image, uploads build artifacts, and publishes the GitHub Release assets.
 
 ## Legacy Electron App
 
@@ -182,8 +184,8 @@ yarn dist
 
 The repository currently has two application layers over the same driver lineage:
 
-- `NativeRazerMacOS/` contains the new SwiftUI/AppKit macOS app.
-- `NativeRazerMacOS/Sources/NativeRazerBridgeC/` exposes the C driver functions to Swift.
+- `RazerMacOS/` contains the new SwiftUI/AppKit macOS app.
+- `RazerMacOS/Sources/NativeRazerBridgeC/` exposes the C driver functions to Swift.
 - `librazermacos/` contains the low-level Razer USB/HID protocol implementation.
 - `src/` contains the legacy Electron UI, state manager, menu-bar app, and Node addon integration.
 - `src/devices/` contains device profiles imported and maintained from OpenRazer and the previous razer-macos work.

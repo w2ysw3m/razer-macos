@@ -2,7 +2,7 @@ import NativeRazerCore
 import SwiftUI
 
 @main
-struct NativeRazerMacOSApp: App {
+struct RazerMacOSApp: App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
   private let appModel = NativeAppModel.shared
   @AppStorage(AppLanguage.storageKey) private var languageRawValue = AppLanguage.english.rawValue

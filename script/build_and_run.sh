@@ -2,19 +2,24 @@
 set -euo pipefail
 
 MODE="${1:-run}"
-APP_NAME="NativeRazerMacOS"
-BUNDLE_ID="com.w2ysw3m.NativeRazerMacOS"
+APP_NAME="RazerMacOS"
+DISPLAY_NAME="Razer macOS"
+APP_BUNDLE_NAME="$DISPLAY_NAME.app"
+BUNDLE_ID="com.w2ysw3m.RazerMacOS"
 MIN_SYSTEM_VERSION="14.0"
-APP_VERSION="0.4.14"
+APP_VERSION="0.4.15"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PACKAGE_DIR="$ROOT_DIR/NativeRazerMacOS"
+PACKAGE_DIR="$ROOT_DIR/RazerMacOS"
 DIST_DIR="$ROOT_DIR/dist/native"
-APP_BUNDLE="$DIST_DIR/$APP_NAME.app"
+APP_BUNDLE="$DIST_DIR/$APP_BUNDLE_NAME"
 APP_CONTENTS="$APP_BUNDLE/Contents"
 APP_MACOS="$APP_CONTENTS/MacOS"
+APP_RESOURCES="$APP_CONTENTS/Resources"
 APP_BINARY="$APP_MACOS/$APP_NAME"
 INFO_PLIST="$APP_CONTENTS/Info.plist"
+ICON_SOURCE="$ROOT_DIR/resources/icon.icns"
+ICON_NAME="AppIcon.icns"
 
 usage() {
   echo "usage: $0 [run|--debug|--logs|--telemetry|--verify|--scan-hardware]" >&2
@@ -27,9 +32,10 @@ build_bundle() {
   BUILD_BINARY="$(swift build --package-path "$PACKAGE_DIR" --show-bin-path)/$APP_NAME"
 
   rm -rf "$APP_BUNDLE"
-  mkdir -p "$APP_MACOS"
+  mkdir -p "$APP_MACOS" "$APP_RESOURCES"
   cp "$BUILD_BINARY" "$APP_BINARY"
   chmod +x "$APP_BINARY"
+  cp "$ICON_SOURCE" "$APP_RESOURCES/$ICON_NAME"
 
   cat >"$INFO_PLIST" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -41,7 +47,11 @@ build_bundle() {
   <key>CFBundleIdentifier</key>
   <string>$BUNDLE_ID</string>
   <key>CFBundleName</key>
-  <string>$APP_NAME</string>
+  <string>$DISPLAY_NAME</string>
+  <key>CFBundleDisplayName</key>
+  <string>$DISPLAY_NAME</string>
+  <key>CFBundleIconFile</key>
+  <string>AppIcon</string>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
   <key>CFBundleShortVersionString</key>

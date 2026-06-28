@@ -1,6 +1,6 @@
 import Testing
 @testable import NativeRazerCore
-@testable import NativeRazerMacOS
+@testable import RazerMacOS
 
 struct NativeDeviceStoreHardwareTests {
   @Test func refresh_whenKeyboardHardwareMatchesLegacyCatalog_marksDeviceConnected() throws {

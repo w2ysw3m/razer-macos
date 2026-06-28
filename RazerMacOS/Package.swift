@@ -3,13 +3,13 @@
 import PackageDescription
 
 let package = Package(
-  name: "NativeRazerMacOS",
+  name: "RazerMacOS",
   platforms: [
     .macOS(.v14)
   ],
   products: [
     .library(name: "NativeRazerCore", targets: ["NativeRazerCore"]),
-    .executable(name: "NativeRazerMacOS", targets: ["NativeRazerMacOS"])
+    .executable(name: "RazerMacOS", targets: ["RazerMacOS"])
   ],
   targets: [
     .target(
@@ -24,16 +24,18 @@ let package = Package(
     ),
     .target(name: "NativeRazerCore"),
     .executableTarget(
-      name: "NativeRazerMacOS",
-      dependencies: ["NativeRazerBridgeC", "NativeRazerCore"]
+      name: "RazerMacOS",
+      dependencies: ["NativeRazerBridgeC", "NativeRazerCore"],
+      path: "Sources/RazerMacOS"
     ),
     .testTarget(
       name: "NativeRazerCoreTests",
       dependencies: ["NativeRazerCore"]
     ),
     .testTarget(
-      name: "NativeRazerMacOSTests",
-      dependencies: ["NativeRazerCore", "NativeRazerMacOS"]
+      name: "RazerMacOSTests",
+      dependencies: ["NativeRazerCore", "RazerMacOS"],
+      path: "Tests/RazerMacOSTests"
     )
   ]
 )

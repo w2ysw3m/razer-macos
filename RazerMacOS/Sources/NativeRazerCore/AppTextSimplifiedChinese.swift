@@ -18,7 +18,7 @@ extension AppText {
     """,
     .aboutRazerMacOS: "关于 Razer macOS",
     .appBuildDescription: "SwiftUI/AppKit + librazermacos 桥接",
-    .appTitle: "Razer macOS 原生版",
+    .appTitle: "Razer macOS",
     .battery: "电量",
     .batteryMenu: "电量：%d%%",
     .batteryStatusUnavailable: "当前桥接读取不到电量状态。",
