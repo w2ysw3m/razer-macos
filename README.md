@@ -6,6 +6,25 @@ Razer macOS is an independent open-source macOS control app for Razer peripheral
 
 The current development focus is practical macOS support for newer Razer devices imported from OpenRazer, starting with the Razer DeathAdder V3 Pro.
 
+## Why This Project Exists
+
+Razer macOS exists because macOS Razer device support should have an open, inspectable path. Many Razer peripheral features are ultimately USB/HID protocol commands, and community projects such as OpenRazer and razer-macos have accumulated device metadata and behavior that users can study, fix, and extend. This project turns that work into a native macOS app that can be audited, packaged, and improved without depending on a closed device manager.
+
+This project is not affiliated with Razer and is not trying to hide its current limits. Official Razer Synapse for Mac remains the right choice when your device is supported and you need first-party support, official modules, or warranty-oriented workflows. Razer macOS focuses on local device control, transparent compatibility data, OpenRazer-derived device work, and a lightweight macOS menu-bar experience that the community can keep improving.
+
+## Difference from Official Razer Synapse for Mac
+
+Razer now provides [Razer Synapse for Mac](https://mysupport.razer.com/app/answers/detail/a_id/15479/~/razer-synapse-for-mac-support-%26-faqs) for supported Apple silicon Macs running macOS Ventura 13 and above. Official device support is defined by Razer's [supported and compatible device list](https://mysupport.razer.com/app/answers/detail/a_id/14809/~/razer-synapse-for-mac-supported-and-compatible-devices), and unsupported or mismatched configurations may not detect devices or may restrict available functionality.
+
+| Area | Official Razer Synapse for Mac | Razer macOS |
+| --- | --- | --- |
+| Ownership | First-party Razer software | Independent community project |
+| Source model | Closed product software | Open-source app, bridge, and device metadata |
+| Platform target | Apple silicon Macs on macOS Ventura 13+ | Universal `arm64` + `x86_64` native app, currently targeting macOS 14+ |
+| Device strategy | Razer-curated supported device list | OpenRazer/legacy catalog plus native hardware verification |
+| Best fit | Supported devices, official modules such as Macro and Linked Games, first-party support | Local controls, protocol transparency, unsupported-device experiments, community maintenance |
+| Support expectation | Official Razer support path | Community best-effort support with documented limitations |
+
 ## Current Status
 
 - Native SwiftUI/AppKit app shell in `RazerMacOS`

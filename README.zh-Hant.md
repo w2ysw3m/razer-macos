@@ -6,6 +6,25 @@ Razer macOS 是一個獨立開源的 macOS Razer 周邊控制 app。它現在以
 
 目前的開發重點，是把 OpenRazer 匯入的新裝置資料真正落到 macOS 可用的控制路徑上，第一個原生驗證目標是 Razer DeathAdder V3 Pro。
 
+## 專案意義
+
+Razer macOS 的意義，是為 macOS 上的 Razer 周邊控制保留一條開放、可審計、可繼續維護的路徑。很多 Razer 周邊功能本質上是 USB/HID protocol 指令，OpenRazer 與 razer-macos 等社群專案已經累積大量裝置 metadata 與行為記錄。這個專案把這些工作整理成一個原生 macOS app，讓使用者與開發者可以檢查、修復、擴展，而不是完全依賴封閉的裝置管理軟體。
+
+本專案與 Razer 官方無關，也不會掩蓋目前限制。如果你的裝置已被官方支援，而且你需要官方支援、官方模組或保固相關流程，Razer Synapse for Mac 仍然是更合適的選擇。Razer macOS 的重點是本地裝置控制、透明相容性資料、基於 OpenRazer 的新裝置適配，以及一個輕量的 macOS menu-bar 體驗，讓社群可以持續補位。
+
+## 與官方 Razer Synapse for Mac 的差異
+
+Razer 現在提供 [Razer Synapse for Mac](https://mysupport.razer.com/app/answers/detail/a_id/15479/~/razer-synapse-for-mac-support-%26-faqs)，面向執行 macOS Ventura 13 及以上的 Apple silicon Mac。官方裝置支援以 Razer 的 [supported and compatible device list](https://mysupport.razer.com/app/answers/detail/a_id/14809/~/razer-synapse-for-mac-supported-and-compatible-devices) 為準；官方說明中亦明確提到，不支援或配置不匹配的裝置可能無法被偵測，或只能使用受限功能。
+
+| 維度 | 官方 Razer Synapse for Mac | Razer macOS |
+| --- | --- | --- |
+| 專案歸屬 | Razer 第一方軟體 | 獨立社群專案 |
+| 源碼模式 | 閉源產品軟體 | 開源 app、bridge 與裝置 metadata |
+| 平台目標 | Apple silicon Mac，macOS Ventura 13+ | universal `arm64` + `x86_64` 原生 app，目前目標 macOS 14+ |
+| 裝置策略 | Razer 官方維護的支援裝置清單 | OpenRazer/legacy 裝置目錄，加上原生硬體驗證 |
+| 適合場景 | 已支援裝置、Macro/Linked Games 等官方模組、第一方支援 | 本地控制、協議透明、未支援裝置實驗、社群持續維護 |
+| 支援預期 | 官方 Razer 支援路徑 | 社群 best-effort 支援，並明確記錄限制 |
+
 ## 目前狀態
 
 - `RazerMacOS` 內已有原生 SwiftUI/AppKit app shell
