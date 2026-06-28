@@ -15,7 +15,7 @@ Razer macOS 是一个开源的 macOS Razer 外设控制 app。这个 fork 正在
 - 原生 DPI 与回报率控制
 - bridge 可以从硬件读取时显示电池/状态
 - Swift 到 `librazermacos` 的 C bridge
-- 原生 release 打包脚本，可生成 Developer ID 签名的 zip/dmg artifacts
+- 原生 release 打包脚本，可生成 universal Developer ID 签名 zip/dmg artifacts
 - GitHub Actions workflow，可生成已签名、已公证的 GitHub Releases
 - `src/devices` 设备目录已更新，目前有 267 个设备 JSON profile
 - legacy Electron app 保留为参考实现和 fallback
@@ -113,6 +113,8 @@ APP_VERSION=0.4.14 MACOS_SIGNING_MODE=required ./script/package_native.sh
 - `dist/release/NativeRazerMacOS-<version>-macOS.zip`
 - `dist/release/NativeRazerMacOS-<version>-macOS.dmg`
 - `dist/release/SHA256SUMS.txt`
+
+默认 release 打包会构建 `arm64` + `x86_64` universal binary。只有制作本地诊断包时才建议覆盖 `NATIVE_MACOS_ARCHS`。
 
 Ad-hoc 包只适合本地测试：
 

@@ -9,6 +9,7 @@ APP_VERSION="${APP_VERSION:-0.4.14}"
 SIGNING_MODE="${MACOS_SIGNING_MODE:-auto}"
 SIGN_IDENTITY="${MACOS_CODESIGN_IDENTITY:-}"
 NOTARIZE="${MACOS_NOTARIZE:-0}"
+NATIVE_MACOS_ARCHS="${NATIVE_MACOS_ARCHS:-arm64 x86_64}"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PACKAGE_DIR="$ROOT_DIR/NativeRazerMacOS"
@@ -34,6 +35,7 @@ Environment:
   MACOS_SIGNING_MODE          auto, required, adhoc, or none. Default: auto.
   MACOS_CODESIGN_IDENTITY     Signing identity name. Developer ID Application is preferred.
   MACOS_NOTARIZE              1 to notarize with notarytool. Default: 0.
+  NATIVE_MACOS_ARCHS          Space-separated architectures. Default: arm64 x86_64.
   APPLE_API_KEY_PATH          Path to AuthKey_*.p8 when MACOS_NOTARIZE=1.
   APPLE_API_KEY_ID            App Store Connect API key id when MACOS_NOTARIZE=1.
   APPLE_API_ISSUER_ID         App Store Connect issuer id when MACOS_NOTARIZE=1.
@@ -190,11 +192,18 @@ main() {
   rm -rf "$BUILD_DIR" "$DIST_DIR"
   mkdir -p "$APP_MACOS" "$DIST_DIR"
 
-  swift build -c release --package-path "$PACKAGE_DIR"
+  local build_args=(-c release --package-path "$PACKAGE_DIR")
+  local arch
+  for arch in $NATIVE_MACOS_ARCHS; do
+    build_args+=(--arch "$arch")
+  done
+
+  swift build "${build_args[@]}"
   local build_binary
-  build_binary="$(swift build -c release --package-path "$PACKAGE_DIR" --show-bin-path)/$APP_NAME"
+  build_binary="$(swift build "${build_args[@]}" --show-bin-path)/$APP_NAME"
   cp "$build_binary" "$APP_BINARY"
   chmod +x "$APP_BINARY"
+  lipo -info "$APP_BINARY"
   write_info_plist
 
   local identity

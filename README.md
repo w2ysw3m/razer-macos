@@ -15,7 +15,7 @@ The current development focus is practical macOS support for newer Razer devices
 - Native device controls for DPI and polling rate
 - Battery/status display when the bridge can read it from hardware
 - C bridge from Swift into `librazermacos`
-- Native release packaging script for Developer ID signed zip/dmg artifacts
+- Native release packaging script for universal Developer ID signed zip/dmg artifacts
 - GitHub Actions workflow for signed, notarized GitHub Releases
 - Refreshed device catalog under `src/devices` with 267 device JSON profiles
 - Legacy Electron app retained as a reference implementation and fallback
@@ -113,6 +113,8 @@ The script writes:
 - `dist/release/NativeRazerMacOS-<version>-macOS.zip`
 - `dist/release/NativeRazerMacOS-<version>-macOS.dmg`
 - `dist/release/SHA256SUMS.txt`
+
+By default, release packaging builds a universal `arm64` + `x86_64` binary. Override `NATIVE_MACOS_ARCHS` only when producing a local diagnostic build.
 
 Ad-hoc packages are useful for local testing only:
 
